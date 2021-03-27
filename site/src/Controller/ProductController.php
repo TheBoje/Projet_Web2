@@ -6,16 +6,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @package App\Controller
+ *
+ * @Route("/product", name="product")
+ */
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/product", name="product")
+     * @Route("")
      */
-    public function index(): Response
+    public function productListAction() : Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ProductController.php',
-        ]);
+        return $this->render("vues/product/productList.html.twig");
     }
+
+    /**
+     * @Route("/orders")
+     */
+    public function ordersAction() : Response
+    {
+        return $this->render("vues/product/orders.html.twig");
+    }
+
 }

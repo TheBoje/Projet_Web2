@@ -6,16 +6,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @package App\Controller
+ *
+ * @Route("/admin", name="admin")
+ */
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/edit/user")
      */
-    public function index(): Response
+    public function editUserAction() : Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/AdminController.php',
-        ]);
+        return $this->render("vues/admin/editUser.html.twig");
+    }
+
+    /**
+     * @Route("/edit/products")
+     */
+    public function editProductsAction() : Response
+    {
+        return $this->render("vues/admin/editProducts.html.twig");
     }
 }

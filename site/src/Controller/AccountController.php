@@ -6,16 +6,51 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @package App\Controller
+ *
+ * @Route("/account", name="account")
+ */
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/account", name="account")
+     * @Route("/welcome")
      */
-    public function index(): Response
+    public function welcomeAction() : Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/AccountController.php',
-        ]);
+        return $this->render("vues/account/welcome.html.twig");
+    }
+
+
+    /**
+     * @Route("/connect")
+     */
+    public function connectAction() : Response
+    {
+        return $this->render("vues/account/connect.html.twig");
+    }
+
+    /**
+     * @Route("/create")
+     */
+    public function createAccountAction() : Response
+    {
+        return $this->render("vues/account/createAccount.html.twig");
+    }
+
+    /**
+     * @Route("/disconnect")
+     */
+    public function disconnectAction() : Response
+    {
+        return $this->render("vues/account/disconnect.html.twig");
+    }
+
+    /**
+     * @Route("/edit")
+     */
+    public function editProfileAction() : Response
+    {
+        return $this->render("vues/account/editProfile.html.twig");
     }
 }
