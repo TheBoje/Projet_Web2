@@ -1,0 +1,18 @@
+{% block menu %}
+<ul>
+    {% if isAuth == false %}
+        <li><a>Connexion</a></li>
+        <li><a>Créer un compte</a></li>
+    {% else %}
+        <li><a>Déconnexion</a></li>
+    {% endif %}
+
+    <li><a>Aller à la page d'accueil</a></li>
+
+    {% if user == "admin" %}
+
+    {% elseif user == "customer" %}
+
+    {% endif %}
+</ul>
+{% endblock %}
