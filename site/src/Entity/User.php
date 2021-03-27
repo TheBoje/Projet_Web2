@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -13,17 +14,20 @@ class User
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy = "AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\Unique
      */
     private $login;
 
     /**
+     * Le mot de passe a une taille de 40 qui est la taille d'un message haché par sha1
      * @ORM\Column(type="string", length=40)
      */
     private $password;
@@ -40,11 +44,13 @@ class User
 
     /**
      * @ORM\Column(type="date")
+     *
+     * @Assert\LessThan("today")
      */
     private $birthdate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default"=false})
      */
     private $is_admin;
 
