@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -22,7 +23,6 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\Unique
      */
     private $login;
 
@@ -45,7 +45,7 @@ class User
     /**
      * @ORM\Column(type="date")
      *
-     * @Assert\LessThan("today")
+     *
      */
     private $birthdate;
 
