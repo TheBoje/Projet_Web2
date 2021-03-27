@@ -1,5 +1,9 @@
 {% block menu %}
 <ul>
+    {# TODO: use real variable instead of this static usage #}
+    {% set isAuth = false %}
+    {% set user = "customer" %}
+
     {% if isAuth == false %}
         <li><a>Connexion</a></li>
         <li><a>Créer un compte</a></li>

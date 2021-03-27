@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    {% include('commons/_header.html.twig') %}
+    <body>
+
+        <div id="menu">
+            {% include('commons/_menu.html.twig') %}
+        </div>
+
+        <div id="vue">
+            {% block vue %}{% endblock %}
+        </div>
+
+        <div id="footer">
+            {% include('commons/_footer.html.twig') %}
+        </div>
+
+    </body>
+</html>
