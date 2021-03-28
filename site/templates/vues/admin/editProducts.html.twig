@@ -1,4 +1,12 @@
 {% extends("commons/_layout.html.twig") %}
 {% block vue %}
     This is the edit products page
+    <ul>
+        {% for product in products %}
+        <li id="{{ product.id }}">
+            <a href="{{ path("admin_editProductID", {id: product.id}) }}">{{ product.label }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% dump(products) %}
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -39,7 +40,23 @@ class AdminController extends AbstractController
      */
     public function editProductsAction() : Response
     {
-        return $this->render("vues/admin/editProducts.html.twig");
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository(Product::class);
+        $products = $productRepository->findAll();
+
+        return $this->render('vues/admin/editProducts.html.twig', ['products'=>$products]);
+    }
+
+    /**
+     * @Route("/edit/product/{id}", name = "editProductID")
+     */
+    public function editProductAction($id) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository(Product::class);
+        $product = $productRepository->find($id);
+
+        return $this->render('vues/admin/editProduct.html.twig', ['product'=>$product]);
     }
 
     /**
@@ -48,17 +65,24 @@ class AdminController extends AbstractController
     public function addProductAction(Request $request) : Response
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(ProductType::class);
+
+        $product = new Product();
+
+        $form = $this->createForm(ProductType::class, $product);
         $form->add('send', SubmitType::class, ['label'=>'add product']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $em->persist($product);
             $em->flush();
             $this->addFlash('info', 'Formulaire valide, ajout à la base de données');
             return $this->redirectToRoute('admin_editProducts');
         }
 
+        if ($form->isSubmitted()){
+            $this->addFlash('info', 'Erreur lors de la création');
+        }
         $args = array('form_add_product'=>$form->createView());
         return $this->render('vues/admin/addProduct.html.twig', $args);
     }

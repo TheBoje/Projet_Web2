@@ -1,0 +1,9 @@
+{% extends("commons/_layout.html.twig") %}
+{% block vue %}
+    <ul>
+        <li> ID : {{ product.id}} </li>
+        <li> Label : {{ product.label }}</li>
+        <li> Price : {{ product.price }}</li>
+        <li> Quantity : {{ product.quantity }}</li>
+    </ul>
+{% endblock %}
