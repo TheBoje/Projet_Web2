@@ -1,22 +1,25 @@
 {% block menu %}
 <ul>
     {# TODO: use real variable instead of this static usage #}
-    {% set isAuth = false %}
-    {% set user = "customer" %}
+    {% set isAuth = true %}
+    {% set isAdmin = false %}
 
     {% if isAuth == false %}
         <li><a href="{{ path('account_connect') }}">Connexion</a></li>
         <li><a href="{{ path('account_createAccount') }}">Créer un compte</a></li>
     {% else %}
         <li><a href="{{ path('account_disconnect') }}">Déconnexion</a></li>
+        {% if isAdmin == true %}
+            <li><a href="{{ path('admin_listUsers') }}">Gérer les clients</a></li>
+            <li><a href="{{ path('admin_editProducts') }}">Créer un produit</a></li>
+            <li><a href="https://fr.wikipedia.org/wiki/Amour_et_Amn%C3%A9sie">Amour et amnésie</a></li>
+        {% else %}
+            <li><a href="{{ path('account_editProfile') }}">Gérer le profil</a></li>
+            <li><a href="{{ path('product_productList') }}">Lister les produits</a></li>
+            <li><a href="{{ path('product_orders') }}">Gérer le panier</a></li>
+        {% endif %}
     {% endif %}
 
     <li><a href="{{ path('account_welcome') }}">Aller à la page d'accueil</a></li>
-
-    {% if user == "admin" %}
-
-    {% elseif user == "customer" %}
-
-    {% endif %}
 </ul>
 {% endblock %}
