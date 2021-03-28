@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -35,7 +38,14 @@ class AccountController extends AbstractController
      */
     public function createAccountAction() : Response
     {
-        return $this->render("vues/account/createAccount.html.twig");
+
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
+
+        $args = array('userForm' => $form->createView());
+        return $this->render('vues/account/createAccount.html.twig', $args);
     }
 
     /**

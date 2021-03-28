@@ -17,7 +17,6 @@ class UserType extends AbstractType
             ->add('name')
             ->add('firstname')
             ->add('birthdate')
-            ->add('is_admin')
         ;
     }
 
