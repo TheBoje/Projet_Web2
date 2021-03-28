@@ -14,15 +14,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/edit/user")
+     * @Route("/edit/user/{id}", name = "admin_editUser")
      */
-    public function editUserAction() : Response
+    public function editUserAction(int $id) : Response
     {
         return $this->render("vues/admin/editUser.html.twig");
     }
 
     /**
-     * @Route("/edit/products")
+     * @return Response
+     *
+     * @Route("/list/users", name = "admin_listUsers")
+     */
+    public function listUsersAction() : Response
+    {
+        return $this->render("vues/admin/listUsers.html.twig");
+    }
+
+    /**
+     * @Route("/edit/products", name = "admin_editProducts")
      */
     public function editProductsAction() : Response
     {
