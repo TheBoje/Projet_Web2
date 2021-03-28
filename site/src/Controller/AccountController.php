@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @package App\Controller
  *
- * @Route("/account", name="account")
+ * @Route("/account", name="account_")
  */
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/welcome", name = "account_welcome")
+     * @Route("/welcome", name = "welcome")
      */
     public function welcomeAction() : Response
     {
@@ -23,7 +23,7 @@ class AccountController extends AbstractController
 
 
     /**
-     * @Route("/connect", name = "account_connect")
+     * @Route("/connect", name = "connect")
      */
     public function connectAction() : Response
     {
@@ -31,7 +31,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/create", name = "account_createAccount")
+     * @Route("/create", name = "createAccount")
      */
     public function createAccountAction() : Response
     {
@@ -39,7 +39,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/disconnect", name = "account_disconnect")
+     * @Route("/disconnect", name = "disconnect")
      */
     public function disconnectAction() : Response
     {
@@ -47,7 +47,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/edit", name = "account_editProfile")
+     * @Route("/edit", name = "editProfile")
      */
     public function editProfileAction() : Response
     {

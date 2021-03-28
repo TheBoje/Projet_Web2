@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @package App\Controller
  *
- * @Route("/admin", name="admin")
+ * @Route("/admin", name="admin_")
  */
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/edit/user/{id}", name = "admin_editUser")
+     * @Route("/edit/user/{id}", name = "editUser")
      */
     public function editUserAction(int $id) : Response
     {
@@ -24,7 +24,7 @@ class AdminController extends AbstractController
     /**
      * @return Response
      *
-     * @Route("/list/users", name = "admin_listUsers")
+     * @Route("/list/users", name = "listUsers")
      */
     public function listUsersAction() : Response
     {
@@ -32,7 +32,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/edit/products", name = "admin_editProducts")
+     * @Route("/edit/products", name = "editProducts")
      */
     public function editProductsAction() : Response
     {

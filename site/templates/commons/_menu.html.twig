@@ -5,13 +5,13 @@
     {% set user = "customer" %}
 
     {% if isAuth == false %}
-        <li><a>Connexion</a></li>
-        <li><a>Créer un compte</a></li>
+        <li><a href="{{ path('account_connect') }}">Connexion</a></li>
+        <li><a href="{{ path('account_createAccount') }}">Créer un compte</a></li>
     {% else %}
-        <li><a>Déconnexion</a></li>
+        <li><a href="{{ path('account_disconnect') }}">Déconnexion</a></li>
     {% endif %}
 
-    <li><a>Aller à la page d'accueil</a></li>
+    <li><a href="{{ path('account_welcome') }}">Aller à la page d'accueil</a></li>
 
     {% if user == "admin" %}
 

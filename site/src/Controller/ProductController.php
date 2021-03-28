@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @package App\Controller
  *
- * @Route("/product", name="product")
+ * @Route("/product", name="product_")
  */
 class ProductController extends AbstractController
 {
     /**
-     * @Route("", name = "product_productList")
+     * @Route("", name = "productList")
      */
     public function productListAction() : Response
     {
@@ -22,7 +22,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/orders", name = "product_orders")
+     * @Route("/orders", name = "orders")
      */
     public function ordersAction() : Response
     {
