@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,16 +37,34 @@ class AccountController extends AbstractController
     /**
      * @Route("/create", name = "createAccount")
      */
-    public function createAccountAction() : Response
+    public function createAccountAction(Request $request) : Response
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository('App::User');
 
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
         $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
+        $form->handleRequest($request);
 
-        $args = array('userForm' => $form->createView());
-        return $this->render('vues/account/createAccount.html.twig', $args);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->flush();
+            $this->addFlash('info', 'ajout d\'un utilisateur');
+            return $this->redirectToRoute('account_welcome');
+        }
+        else
+        {
+            if($form->isSubmitted())
+                $this->addFlash('info', 'erreur lors de la création');
+            
+            $args = array('userForm' => $form->createView());
+            return $this->render('vues/account/createAccount.html.twig', $args);
+        }
+
+
     }
 
     /**

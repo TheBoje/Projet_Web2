@@ -14,6 +14,8 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // le champ isAdmin est rempli par défaut à false et on ne veut pas qu'un
+        // utilisateur puisse le devenir
         $builder
             ->add('login',
                 TextType::class,
