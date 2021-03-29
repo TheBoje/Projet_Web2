@@ -1,4 +1,27 @@
 {% extends("commons/_layout.html.twig") %}
 {% block vue %}
-    This is the list user page
+    <table>
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Identifiant</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Date de naissance</td>
+            <td>Est admin</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.login }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.birthdate|date('d/m/Y') }}</td>
+                <td>{{ (user.isAdmin == true) ? 'oui' : 'non' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

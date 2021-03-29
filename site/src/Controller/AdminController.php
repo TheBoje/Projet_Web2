@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\User;
 use App\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -17,6 +19,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
+    private function isAccessGranted()
+    {
+        if(!$this->getParameter('is-auth') || !$this->getParameter('is-admin'))
+        {
+            throw $this->createNotFoundException('You\'re not allowed here');
+        }
+    }
+
+
     /**
      * @Route("/edit/user/{id}", name = "editUser")
      */
@@ -32,7 +43,13 @@ class AdminController extends AbstractController
      */
     public function listUsersAction() : Response
     {
-        return $this->render("vues/admin/listUsers.html.twig");
+        $this->isAccessGranted();
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository(User::class);
+        $users = $userRepository->findAll();
+
+        return $this->render("vues/admin/listUsers.html.twig", ['users' => $users]);
     }
 
     /**
