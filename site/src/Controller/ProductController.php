@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,16 +28,16 @@ class ProductController extends AbstractController
     }
 
 
-    public function orderProductAction()
-    {
-
-    }
-
     /**
-     * @Route("/orders", name = "orders")
+     * @Route("/orders/{id}",
+     *     name = "orders",
+     *     requirements = {"id" = "[1-9]\d*"})
      */
-    public function ordersAction() : Response
+    public function ordersAction(int $id) : Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $orderRepository = $em->getRepository(Order::class);
+
         return $this->render("vues/product/orders.html.twig");
     }
 
