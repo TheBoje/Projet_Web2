@@ -27,13 +27,14 @@ class AdminController extends AbstractController
         }
     }
 
-
     /**
-     * @Route("/edit/user/{id}", name = "editUser")
+     * @Route("/delete/user/{id}", name = "deleteUser")
      */
-    public function editUserAction(int $id) : Response
+    public function deleteUserAction(int $id) : Response
     {
-        return $this->render("vues/admin/editUser.html.twig");
+        $this->isAccessGranted();
+
+        return $this->redirectToRoute('admin_listUsers');
     }
 
     /**
