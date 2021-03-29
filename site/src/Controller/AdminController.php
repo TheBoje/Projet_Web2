@@ -28,11 +28,21 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete/user/{id}", name = "deleteUser")
+     * @Route(
+     *     "/delete/user/{id}",
+     *     name = "deleteUser",
+     *     requirements = {"id" = "[1-9]\d*"})
      */
     public function deleteUserAction(int $id) : Response
     {
         $this->isAccessGranted();
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository('App:User');
+
+        $user = $userRepository->find($id);
+        $em->remove($user);
+        $em->flush();
 
         return $this->redirectToRoute('admin_listUsers');
     }
