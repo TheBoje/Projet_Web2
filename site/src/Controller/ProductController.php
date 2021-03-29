@@ -26,6 +26,12 @@ class ProductController extends AbstractController
         return $this->render("vues/product/productList.html.twig", ['products'=>$products]);
     }
 
+
+    public function orderProductAction()
+    {
+
+    }
+
     /**
      * @Route("/orders", name = "orders")
      */
