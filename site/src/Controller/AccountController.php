@@ -22,8 +22,7 @@ class AccountController extends AbstractController
      */
     public function welcomeAction() : Response
     {
-        $args = array('isAdmin' => $this->getParameter('is-admin'), 'isAuth' => $this->getParameter('is-auth'));
-        return $this->render("vues/account/welcome.html.twig", $args);
+        return $this->render("vues/account/welcome.html.twig");
     }
 
 
