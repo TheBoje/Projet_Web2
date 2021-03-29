@@ -128,7 +128,7 @@ class AdminController extends AbstractController
             $em->persist($product);
             $em->flush();
             $this->addFlash('info', 'Formulaire valide, ajout à la base de données');
-            return $this->redirectToRoute('admin_editProducts');
+            return $this->redirectToRoute('account_welcome');
         }
 
         if ($form->isSubmitted()){

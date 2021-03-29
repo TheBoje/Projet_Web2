@@ -2,4 +2,5 @@
 {% block vue %}
     ID : {{ id }}
     {{ form(form_edit_product) }}
+    <a href="{{ path('admin_deleteProduct', {'id' : id}) }}"><button>Supprimer</button></a>
 {% endblock %}
