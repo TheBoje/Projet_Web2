@@ -41,7 +41,7 @@ class AccountController extends AbstractController
     {
 
         $em = $this->getDoctrine()->getManager();
-        $userRepository = $em->getRepository('App::User');
+        $userRepository = $em->getRepository('App:User');
 
         $user = new User();
 
@@ -49,8 +49,12 @@ class AccountController extends AbstractController
         $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
         $form->handleRequest($request);
 
+        $user->setPassword(sha1($user->getPassword()));
+        $user->setIsAdmin(false);
+
         if($form->isSubmitted() && $form->isValid())
         {
+            $em->persist($user);
             $em->flush();
             $this->addFlash('info', 'ajout d\'un utilisateur');
             return $this->redirectToRoute('account_welcome');
