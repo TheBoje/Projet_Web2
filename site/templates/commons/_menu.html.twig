@@ -1,9 +1,5 @@
 {% block menu %}
 <ul>
-    {# TODO: use real variable instead of this static usage #}
-    {% set isAuth = true %}
-    {% set isAdmin = false %}
-
     {% if isAuth == false %}
         <li><a href="{{ path('account_connect') }}">Connexion</a></li>
         <li><a href="{{ path('account_createAccount') }}">Créer un compte</a></li>

@@ -22,7 +22,8 @@ class AccountController extends AbstractController
      */
     public function welcomeAction() : Response
     {
-        return $this->render("vues/account/welcome.html.twig");
+        $args = array('isAdmin' => $this->getParameter('is-admin'), 'isAuth' => $this->getParameter('is-auth'));
+        return $this->render("vues/account/welcome.html.twig", $args);
     }
 
 
@@ -41,7 +42,6 @@ class AccountController extends AbstractController
     {
 
         $em = $this->getDoctrine()->getManager();
-        $userRepository = $em->getRepository('App:User');
 
         $user = new User();
 
@@ -49,8 +49,8 @@ class AccountController extends AbstractController
         $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
         $form->handleRequest($request);
 
-        $user->setPassword(sha1($user->getPassword()));
-        $user->setIsAdmin(false);
+        $user->setPassword(sha1($user->getPassword())); // On hash le mot de passe
+        $user->setIsAdmin(false); // le compte créé ne sera jamais admin
 
         if($form->isSubmitted() && $form->isValid())
         {
