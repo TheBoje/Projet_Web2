@@ -58,6 +58,8 @@ class AdminController extends AbstractController
      */
     public function editProductsAction() : Response
     {
+        $this->isAccessGranted();
+
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
         $products = $productRepository->findAll();
@@ -70,6 +72,8 @@ class AdminController extends AbstractController
      */
     public function editProductAction($id, Request $request) : Response
     {
+        $this->isAccessGranted();
+
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
         $product = $productRepository->find($id);
@@ -99,6 +103,8 @@ class AdminController extends AbstractController
      */
     public function addProductAction(Request $request) : Response
     {
+        $this->isAccessGranted();
+
         $em = $this->getDoctrine()->getManager();
 
         $product = new Product();
