@@ -12,13 +12,15 @@
             <th>Label</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th> </th>
         </tr>
         {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
-                <td><a href="{{ path("admin_editProductID", {id: product.id}) }}">{{ product.label }}</a></td>
+                <td><a href="{{ path('admin_editProductID', {id: product.id}) }}">{{ product.label }}</a></td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.quantity }}</td>
+                <td><a href="{{ path('admin_deleteProduct', {'id' : product.id}) }}">Supprimer</a></td>
             </tr>
         {% endfor %}
     </table>
