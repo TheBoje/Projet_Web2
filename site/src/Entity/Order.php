@@ -19,14 +19,12 @@ class Order
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="id")
+     * @ORM\ManyToOne(targetEntity=User::class, mappedBy="id")
      */
     private $idClient;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="id")
+     * @ORM\ManyToOne(targetEntity=Product::class, mappedBy="id")
      */
     private $idProduct;
 
