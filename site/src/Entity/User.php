@@ -9,7 +9,10 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`im2021_user`")
+ * @ORM\Table(name="`im2021_user`",
+ *     uniqueConstraints = {
+ *      @ORM\UniqueConstraint(name = "log_idx", columns = {"login"})
+ *     })
  */
 class User
 {

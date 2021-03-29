@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
- * @ORM\Table(name="`order`")
+ * @ORM\Table(name="`im2021_order`",
+ *     uniqueConstraints = {
+ *      @ORM\UniqueConstraint(name = "prod_user_idx", columns = {"idClient", "idProduct"}
+ *     })
  */
 class Order
 {
@@ -19,12 +22,16 @@ class Order
     private $id;
 
     /**
+     * @var User
      * @ORM\ManyToOne(targetEntity=User::class, mappedBy="id")
+     * @ORM\JoinColumn(name = "idClient", nullable = false)
      */
     private $idClient;
 
     /**
+     * @var Product
      * @ORM\ManyToOne(targetEntity=Product::class, mappedBy="id")
+     * @ORM\JoinColumn(name = "idProduct", nullable = false)
      */
     private $idProduct;
 
@@ -38,7 +45,7 @@ class Order
         return $this->id;
     }
 
-    public function getIdClient(): ?int
+    public function getIdClient(): User
     {
         return $this->idClient;
     }
@@ -50,7 +57,7 @@ class Order
         return $this;
     }
 
-    public function getIdProduct(): ?int
+    public function getIdProduct(): Product
     {
         return $this->idProduct;
     }
