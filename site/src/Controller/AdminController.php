@@ -138,4 +138,19 @@ class AdminController extends AbstractController
         return $this->render('vues/admin/addProduct.html.twig', $args);
     }
 
+    /**
+     * @Route("/add/product/{id}", name = "deleteProduct")
+     */
+    public function deleteProductAction($id) : Response {
+        $this->isAccessGranted();
+
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository('App:Product');
+
+        $product = $productRepository->find($id);
+        $em->remove($product);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_editProducts');
+    }
 }
