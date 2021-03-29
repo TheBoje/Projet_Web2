@@ -31,7 +31,9 @@ class UserType extends AbstractType
                 ['label' => 'prénom'])
             ->add('birthdate',
                 DateType::class,
-                ['label' => 'date de naissance'])
+                [
+                    'label' => 'date de naissance',
+                    'years' => range(date('Y')-100, date('Y')),])
         ;
     }
 
