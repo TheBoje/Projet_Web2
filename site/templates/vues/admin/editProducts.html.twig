@@ -1,12 +1,26 @@
 {% extends("commons/_layout.html.twig") %}
 {% block vue %}
     This is the edit products page
-    <ul>
+    <style>
+        table, tr, td {
+            border: 1px solid black;
+        }
+    </style>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Label</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
         {% for product in products %}
-        <li id="{{ product.id }}">
-            <a href="{{ path("admin_editProductID", {id: product.id}) }}">{{ product.label }}</a>
-        </li>
+            <tr>
+                <td>{{ product.id }}</td>
+                <td><a href="{{ path("admin_editProductID", {id: product.id}) }}">{{ product.label }}</a></td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     {% dump(products) %}
 {% endblock %}

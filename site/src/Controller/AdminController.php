@@ -50,13 +50,30 @@ class AdminController extends AbstractController
     /**
      * @Route("/edit/product/{id}", name = "editProductID")
      */
-    public function editProductAction($id) : Response
+    public function editProductAction($id, Request $request) : Response
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
         $product = $productRepository->find($id);
 
-        return $this->render('vues/admin/editProduct.html.twig', ['product'=>$product]);
+        $form = $this->createForm(ProductType::class, $product);
+        $form->add('send', SubmitType::class, ['label' => 'Modifier']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($product);
+            $em->flush();
+            $this->addFlash('info', 'Modification terminée');
+            return $this->redirectToRoute('admin_editProducts');
+        }
+
+        if ($form->isSubmitted())
+        {
+            $this->addFlash('info', 'Erreur lors de la modification');
+        }
+        $args = array('form_edit_product' =>$form->createView(), 'id'=>$id);
+        return $this->render('vues/admin/editProduct.html.twig', $args);
     }
 
     /**
