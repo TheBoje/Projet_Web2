@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Product;
-use App\Form\OrderType;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,35 +17,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
+    public function isAllowedUser(int $id)
+    {
+        if($this->getParameter('id-user') !== $id && $this->getParameter('is-auth')) // TODO : rajouter le is-admin ?
+            throw $this->createNotFoundException('You\'re not allowed here');
+    }
+
     /**
      * @Route("", name = "productList")
      */
-    public function productListAction(Request $request) : Response
+    public function productListAction() : Response
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
         $products = $productRepository->findAll();
-        $order = new Order();
 
-        $form = $this->createForm(OrderType::class, $products);
-        $form->add('send', SubmitType::class, ['label'=>'Commander']);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $order = $form->getData();
-            $em->persist($order);
-            $em->flush();
-            $this->addFlash('info', 'Ajout au panier réussi');
-            return $this->redirectToRoute('product_orders');
-        }
-        
-        if ($form->isSubmitted())
-        {
-            $this->addFlash('info', 'Erreur lors de l\'ajout au panier');
-        }
-
-        return $this->render("vues/product/productList.html.twig", ['form_products'=>$form->createView()]);
+        return $this->render("vues/product/productList.html.twig", ['products'=>$products]);
     }
 
 
@@ -55,12 +41,19 @@ class ProductController extends AbstractController
      *     name = "orders",
      *     requirements = {"id" = "[1-9]\d*"})
      */
-    public function ordersAction(int $id) : Response
+    public function listOrdersAction(int $id) : Response
     {
+        $this->isAllowedUser($id);
+
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
+        $userRepository = $em->getRepository(User::class);
+        $productRepository = $em->getRepository(Product::class);
 
-        return $this->render("vues/product/orders.html.twig");
+        $user = $userRepository->find($id);
+        $orders = $orderRepository->findBy(array('user' => $user));
+
+        return $this->render("vues/product/orders.html.twig", ['orders' => $orders]);
     }
 
     /**

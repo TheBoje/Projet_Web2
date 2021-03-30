@@ -1,0 +1,23 @@
+{% extends("commons/_layout.html.twig") %}
+{% block title %}Liste du panier{% endblock %}
+{% block vue %}
+    <table>
+        <thead>
+        <tr>
+            <th>nom</th>
+            <th>prix</th>
+            <th>quantité</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.product.label }}</td>
+                <td>{{ order.product.price }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.quantity }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

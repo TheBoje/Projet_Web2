@@ -24,16 +24,16 @@ class Order
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity=User::class, mappedBy="id")
-     * @ORM\JoinColumn(name = "idClient", nullable = false)
+     * @ORM\JoinColumn(name = "id_client", nullable = false)
      */
-    private $idClient;
+    private $client;
 
     /**
      * @var Product
      * @ORM\ManyToOne(targetEntity=Product::class, mappedBy="id")
-     * @ORM\JoinColumn(name = "idProduct", nullable = false)
+     * @ORM\JoinColumn(name = "id_product", nullable = false)
      */
-    private $idProduct;
+    private $product;
 
     /**
      * @ORM\Column(type="integer")
