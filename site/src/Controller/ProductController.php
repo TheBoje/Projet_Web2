@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -15,6 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
+    public function isAllowedUser(int $id)
+    {
+        if($this->getParameter('id-user') !== $id && $this->getParameter('is-auth')) // TODO : rajouter le is-admin ?
+            throw $this->createNotFoundException('You\'re not allowed here');
+    }
+
     /**
      * @Route("", name = "productList")
      */
@@ -33,12 +41,19 @@ class ProductController extends AbstractController
      *     name = "orders",
      *     requirements = {"id" = "[1-9]\d*"})
      */
-    public function ordersAction(int $id) : Response
+    public function listOrdersAction(int $id) : Response
     {
+        $this->isAllowedUser($id);
+
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
+        $userRepository = $em->getRepository(User::class);
+        $productRepository = $em->getRepository(Product::class);
 
-        return $this->render("vues/product/orders.html.twig");
+        $user = $userRepository->find($id);
+        $orders = $orderRepository->findBy(array('user' => $user));
+
+        return $this->render("vues/product/orders.html.twig", ['orders' => $orders]);
     }
 
     /**
