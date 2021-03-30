@@ -1,18 +1,4 @@
 {% extends("commons/_layout.html.twig") %}
 {% block vue %}
-    <table>
-        <tr>
-            <th>Label</th>
-            <th>Prix</th>
-            <th>Quantité Disponible</th>
-            <th> </th>
-        </tr>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.label }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.quantity }}</td>
-                <td><a href="{{ path('product_add', {'id' : product.id}) }}">Ajouter au panier</a></td>
-        {% endfor %}
-    </table>
+   {{ form(form_products) }}
 {% endblock %}

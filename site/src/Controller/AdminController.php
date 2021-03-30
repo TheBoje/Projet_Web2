@@ -120,7 +120,7 @@ class AdminController extends AbstractController
         $product = new Product();
 
         $form = $this->createForm(ProductType::class, $product);
-        $form->add('send', SubmitType::class, ['label'=>'add product']);
+        $form->add('send', SubmitType::class, ['label'=>'Ajout le produit']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
