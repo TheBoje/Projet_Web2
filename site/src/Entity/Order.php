@@ -24,14 +24,14 @@ class Order
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(name = "id_client", nullable = false)
+     * @ORM\JoinColumn(name = "client", nullable = false)
      */
     private $client;
 
     /**
      * @var Product
      * @ORM\ManyToOne(targetEntity=Product::class)
-     * @ORM\JoinColumn(name = "id_product", nullable = false)
+     * @ORM\JoinColumn(name = "product", nullable = false)
      */
     private $product;
 
