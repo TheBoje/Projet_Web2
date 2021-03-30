@@ -97,16 +97,8 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('product_listOrders', ['id' => $this->getParameter('id-user')]);
     }
 
-    /**
-     * Vide le panier d'un utilisateur
-     *
-     * @Route("orders/empty",
-     *     name = "emptyOrders")
-     */
-    public function emptyOrdersAction()
+    private function emptyOrders($isBuyed = false)
     {
-        $this->isAllowedUser($this->getParameter('id-user'));
-
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
         $productRepository = $em->getRepository(Product::class);
@@ -116,12 +108,42 @@ class ProductController extends AbstractController
 
         foreach($orders as $order)
         {
-            $storedProduct = $productRepository->find($order->getProduct()->getId());
-            $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
+            if(!$isBuyed)
+            {
+                $storedProduct = $productRepository->find($order->getProduct()->getId());
+                $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
+            }
             $em->remove($order);
         }
 
         $em->flush();
+    }
+
+    /**
+     * Vide le panier d'un utilisateur
+     *
+     * @Route("orders/empty",
+     *     name = "emptyOrders")
+     */
+    public function emptyOrdersAction() : Response
+    {
+        $this->isAllowedUser($this->getParameter('id-user'));
+
+        $this->emptyOrders();
+
+        return $this->redirectToRoute('product_listOrders');
+    }
+
+    /**
+     * @Route("orders/buy", name = "buyOrder")
+     */
+    public function buyOrdersAction() : Response
+    {
+        $this->isAllowedUser($this->getParameter('id-user'));
+
+        $this->emptyOrders(true);
+
+        return $this->redirectToRoute('product_listOrders');
     }
 
     /**
