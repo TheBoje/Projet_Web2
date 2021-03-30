@@ -12,9 +12,9 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('idClient')
-            ->add('idProduct')
             ->add('quantity')
+            ->add('client')
+            ->add('product')
         ;
     }
 
