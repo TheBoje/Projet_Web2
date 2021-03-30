@@ -135,7 +135,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("orders/buy", name = "buyOrder")
+     * @Route("orders/buy", name = "buyOrders")
      */
     public function buyOrdersAction() : Response
     {
