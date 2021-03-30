@@ -19,22 +19,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
+    // Vérifie si l'utilisateur est connecté et est bien administrateur
     private function isAccessGranted()
     {
-        if(!$this->getParameter('is-auth') || !$this->getParameter('is-admin'))
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
+        if(!$this->getParameter('is-auth') || !$this->getParameter('is-admin') || $user === null)
         {
             throw $this->createNotFoundException('You\'re not allowed here');
         }
     }
 
     /**
+     * Efface un utilisateur de la base de donnée
+     *
      * @Route(
      *     "/delete/user/{id}",
      *     name = "deleteUser",
      *     requirements = {"id" = "[1-9]\d*"})
+     * @param int $id
+     * @return Response
      */
     public function deleteUserAction(int $id) : Response
     {
+        // TODO vider le panier de l'utilisateur
         $this->isAccessGranted();
 
         $em = $this->getDoctrine()->getManager();

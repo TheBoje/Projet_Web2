@@ -98,6 +98,36 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Vide le panier d'un utilisateur 
+     *
+     * @param int $id
+     *
+     * @Route("orders/empty/{id}",
+     *     name = "emptyOrders",
+     *     requirements = {"id" = "[1-9]\d*"})
+     */
+    public function emptyOrdersAction(int $id)
+    {
+        $this->isAllowedUser($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $orderRepository = $em->getRepository(Order::class);
+        $productRepository = $em->getRepository(Product::class);
+        $userRepository = $em->getRepository(User::class);
+
+        $orders = $orderRepository->findBy(array('client' => $userRepository->find($id)));
+
+        foreach($orders as $order)
+        {
+            $storedProduct = $productRepository->find($order->getProduct()->getId());
+            $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
+            $em->remove($order);
+        }
+
+        $em->flush();
+    }
+
+    /**
      * @Route("/add/{id}", name = "add")
      */
     public function addProductAction() : Response
