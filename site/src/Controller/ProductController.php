@@ -17,10 +17,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
-    public function isAllowedUser(int $id)
+    // TODO revenir sur ce code dégueulasse
+    public function isAllowedUser(int $id = null)
     {
-        if($this->getParameter('id-user') !== $id && $this->getParameter('is-auth')) // TODO : rajouter le is-admin ?
-            throw $this->createNotFoundException('You\'re not allowed here');
+        if($id !== null)
+        {
+            if($this->getParameter('id-user') !== $id && $this->getParameter('is-auth') || $this->getParameter('is-admin'))
+                throw $this->createNotFoundException('You\'re not allowed here');
+        }
+        else
+        {
+            if(!$this->getParameter('is-auth') || $this->getParameter('is-admin'))
+                throw $this->createNotFoundException('You\'re not allowed here');
+        }
     }
 
     /**
@@ -28,6 +37,8 @@ class ProductController extends AbstractController
      */
     public function productListAction() : Response
     {
+        $this->isAllowedUser();
+
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
         $products = $productRepository->findAll();
