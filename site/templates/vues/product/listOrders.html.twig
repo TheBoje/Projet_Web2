@@ -20,7 +20,7 @@
                 <td>{{ order.product.price }}</td>
                 <td>{{ order.quantity }}</td>
                 <td>{{ (order.quantity * order.product.price) }}</td>
-                <td><a href="{{ path('product_deleteOrder', {'id' : order.id}) }}">Supprimer</a></td>
+                <td><a href="{{ path('product_deleteOrder', {'userId' : order.client.id, 'orderId' : order.id}) }}">Supprimer</a></td>
             </tr>
             {% set totalPrice = (order.quantity * order.product.price) + totalPrice %}
             {% set totalQuantity = order.product.quantity + totalQuantity %}

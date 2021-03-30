@@ -139,7 +139,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/add/product/{id}", name = "deleteProduct")
+     * @Route("/delete/product/{id}", name = "deleteProduct")
      */
     public function deleteProductAction($id) : Response {
         $this->isAccessGranted();

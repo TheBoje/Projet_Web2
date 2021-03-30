@@ -45,26 +45,26 @@ class Order
         return $this->id;
     }
 
-    public function getIdClient(): User
+    public function getClient(): User
     {
         return $this->client;
     }
 
-    public function setIdClient(int $idClient): self
+    public function setClient(User $client): self
     {
-        $this->client = $idClient;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getIdProduct(): Product
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
-    public function setIdProduct(int $idProduct): self
+    public function setProduct(Product $product): self
     {
-        $this->product = $idProduct;
+        $this->product = $product;
 
         return $this;
     }
