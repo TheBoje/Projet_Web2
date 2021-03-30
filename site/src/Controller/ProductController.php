@@ -92,9 +92,9 @@ class ProductController extends AbstractController
         $productRepository = $em->getRepository(Product::class);
 
         $user = $userRepository->find($id);
-        $orders = $orderRepository->findBy(array('user' => $user));
+        $orders = $orderRepository->findBy(array('client' => $user));
 
-        return $this->render("vues/product/orders.html.twig", ['orders' => $orders]);
+        return $this->render("vues/product/listOrders.html.twig", ['orders' => $orders]);
     }
 
     /**
