@@ -72,13 +72,13 @@ class ProductController extends AbstractController
      * @param int $orderId
      * @return Response
      *
-     * @Route("orders/delete/{userId}/{orderId}",
+     * @Route("orders/delete/{orderId}",
      *     name = "deleteOrder",
      *     requirements = { "userId" = "[1-9]\d*", "orderId" = "[1-9]\d*"})
      */
-    public function deleteOrderAction(int $userId, int $orderId) : Response
+    public function deleteOrderAction(int $orderId) : Response
     {
-        $this->isAllowedUser($userId);
+        $this->isAllowedUser($this->getParameter('id-user'));
 
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
@@ -94,28 +94,25 @@ class ProductController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToRoute('product_listOrders', ['id' => $userId]);
+        return $this->redirectToRoute('product_listOrders', ['id' => $this->getParameter('id-user')]);
     }
 
     /**
-     * Vide le panier d'un utilisateur 
+     * Vide le panier d'un utilisateur
      *
-     * @param int $id
-     *
-     * @Route("orders/empty/{id}",
-     *     name = "emptyOrders",
-     *     requirements = {"id" = "[1-9]\d*"})
+     * @Route("orders/empty",
+     *     name = "emptyOrders")
      */
-    public function emptyOrdersAction(int $id)
+    public function emptyOrdersAction()
     {
-        $this->isAllowedUser($id);
+        $this->isAllowedUser($this->getParameter('id-user'));
 
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
         $productRepository = $em->getRepository(Product::class);
         $userRepository = $em->getRepository(User::class);
 
-        $orders = $orderRepository->findBy(array('client' => $userRepository->find($id)));
+        $orders = $orderRepository->findBy(array('client' => $userRepository->find($this->getParameter('id-user'))));
 
         foreach($orders as $order)
         {
