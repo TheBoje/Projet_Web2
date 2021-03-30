@@ -1,12 +1,16 @@
 {% extends("commons/_layout.html.twig") %}
 {% block title %}Liste du panier{% endblock %}
 {% block vue %}
+    {% set totalPrice = 0 %}
+    {% set totalQuantity = 0 %}
     <table>
         <thead>
         <tr>
-            <th>nom</th>
-            <th>prix</th>
-            <th>quantité</th>
+            <th>Nom</th>
+            <th>Prix u.</th>
+            <th>Quantité</th>
+            <th>Prix total</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -15,9 +19,26 @@
                 <td>{{ order.product.label }}</td>
                 <td>{{ order.product.price }}</td>
                 <td>{{ order.quantity }}</td>
-                <td>{{ order.quantity }}</td>
+                <td>{{ (order.quantity * order.product.price) }}</td>
+                <td><a href="{{ path('product_deleteOrder', {'id' : order.id}) }}">Supprimer</a></td>
             </tr>
+            {% set totalPrice = (order.quantity * order.product.price) + totalPrice %}
+            {% set totalQuantity = order.product.qantity + totalQuantity %}
         {% endfor %}
         </tbody>
+        <tfoot>
+        <tr>
+            <td>Total</td>
+            <td></td>
+            <td>{{ totalQuantity }}</td>
+            <td>{{ totalPrice }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3"></td>
+            <td><a>Acheter</a></td>
+            <td><a>Vider</a></td>
+        </tr>
+        </tfoot>
     </table>
 {% endblock %}
