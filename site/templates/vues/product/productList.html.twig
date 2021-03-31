@@ -1,4 +1,31 @@
 {% extends("commons/_layout.html.twig") %}
 {% block vue %}
-   {{ form(form_products) }}
+   Liste des bières disponibles dans notre magasin
+   <form action="{{ path('product_productList') }}" method="post">
+      <table>
+         <tr>
+            <th>Label</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Choix</th>
+         </tr>
+         {% for order in orders %}
+         <tr>
+            <td>{{ order.product.label }}</td>
+            <td>{{ order.product.price }}</td>
+            <td>{{ order.product.quantity }}</td>
+            <td>
+               <label>
+                  <select name="{{ order.product.id }}">
+                     {% for i in 0..(order.product.quantity) %}
+                        <option value="{{ i }}">{{ i }}</option>
+                     {% endfor %}
+                  </select>
+               </label>
+            </td>
+         </tr>
+         {% endfor %}
+      </table>
+      <input type="submit" name="Commander">
+   </form>
 {% endblock %}

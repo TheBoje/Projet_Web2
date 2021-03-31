@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\OrderType;
+use http\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,60 +42,67 @@ class ProductController extends AbstractController
     public function productListAction(Request $request) : Response
     {
         $this->isAllowedUser();
-
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
+        $userRepository = $em->getRepository(User::class);
+        $orderRepository = $em->getRepository(Order::class);
+        $client = $userRepository->find($this->getParameter('id-user'));
         $products = $productRepository->findAll();
         $orders = [];
         foreach ($products as $index=>$product)
         {
             $orders[$index] = new Order();
-            $orders[$index]->setIdClient($this->getParameter('id-user'));
-            $orders[$index]->setIdProduct($product->getId());
+            $orders[$index]->setClient($client);
+            $orders[$index]->setProduct($product);
             $orders[$index]->setQuantity($product->getQuantity());
-            // Ajout du nom du produit ?
         }
-        dump($orders);
-        // Ajout de tous les produits à 0 qqt
-        // Ajout du client id au client en cours
 
-        $form = $this->createForm(OrderType::class, $orders);
-        $form->add('send', SubmitType::class, ['label'=>'Commander']);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
+        if ($request->isMethod('POST'))
         {
-            dump($orders);
-            foreach ($orders as $index=>$order)
+            $count = 0;
+            foreach ($products as $product)
             {
-                if ($order->getQuantity() >= 0)
-                {
-                    $em->persist($order);
+                $temp_order = null;
+                $index = $product->getId();
+                $quantity_form = $request->request->get($index);
+                if ($quantity_form > 0){
+                    $existing_order = $orderRepository->findOneBy(['client'=>$client, 'product'=>$product]);
+                    if (isset($existing_order))
+                    {
+                        $existing_order->setQuantity($existing_order->getQuantity() + $quantity_form);
+                    }else{
+                        $temp_order = new Order();
+                        $temp_order->setProduct($product);
+                        $temp_order->setQuantity($quantity_form);
+                        $temp_order->setClient($client);
+                        $em->persist($temp_order);
+                    }
+                    $product->setQuantity($product->getQuantity() - $quantity_form);
+                    $count++;
                 }
             }
-
-            $em->flush();
-            $this->addFlash('info', 'Ajout au panier réussi');
-            return $this->redirectToRoute('product_orders');
+            if ($count > 0){
+                $em->flush();
+                $this->addFlash('info', 'Ajout au panier de '. $count .' article(s) réussi');
+            }
+            else
+            {
+                $this->addFlash('info', 'Erreur dans l\'ajout au panier');
+            }
         }
 
-        if ($form->isSubmitted())
-        {
-            $this->addFlash('info', 'Erreur lors de l\'ajout au panier');
-        }
-
-        return $this->render("vues/product/productList.html.twig", ['form_products'=>$form->createView()]);
+        return $this->render("vues/product/productList.html.twig", ['orders'=>$orders]);
 
     }
 
 
     /**
-     * @Route("/orders/list/{id}",
-     *     name = "listOrders",
-     *     requirements = {"id" = "[1-9]\d*"})
+     * @Route("/orders/list",
+     *     name = "listOrders")
      */
-    public function listOrdersAction(int $id) : Response
+    public function listOrdersAction() : Response
     {
+        $id = $this->getParameter('id-user');
         $this->isAllowedUser($id);
 
         $em = $this->getDoctrine()->getManager();
