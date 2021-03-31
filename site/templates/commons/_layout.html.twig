@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html>
-    {% include('commons/_header.html.twig') %}
-    <body>
+{% extends("commons/_body.html.twig") %}
+{% block menu %}
+    {% include("commons/_menu.html.twig") %}
+{% endblock %}
 
-        <div id="menu">
-            {% include('commons/_menu.html.twig') %}
-        </div>
+{% block flash %}
+    {% include("commons/_flash.html.twig") %}
+{% endblock %}
 
-        <div id="flash">
-            {% include('commons/_flash.html.twig') %}
-        </div>
-
-        <div id="vue">
-            {% block vue %}{% endblock %}
-        </div>
-
-        <div id="footer">
-            {% include('commons/_footer.html.twig') %}
-        </div>
-
-    </body>
-</html>
+{% block footer %}
+    {% include("commons/_footer.html.twig") %}
+{% endblock %}

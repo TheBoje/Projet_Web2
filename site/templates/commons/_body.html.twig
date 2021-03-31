@@ -1,0 +1,18 @@
+{% extends("commons/_base.html.twig") %}
+{% block content_body %}
+    <div id="menu">
+        {% block menu %}{% endblock %}
+    </div>
+
+    <div id="flash_messages">
+        {% block flash %}{% endblock %}
+    </div>
+
+    <div id="vue">
+        {% block vue %}{% endblock %}
+    </div>
+
+    <div id="footer">
+        {% block footer %}{% endblock %}
+    </div>
+{% endblock %}
