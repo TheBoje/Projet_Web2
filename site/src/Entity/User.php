@@ -26,8 +26,6 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank
-     * @Assert\Unique
      */
     private $login;
 
@@ -65,17 +63,6 @@ class User
         $this->is_admin = $isAdmin;
     }
 
-    /**
-     * @param $password
-     * @return bool
-     *
-     * @Assert\IsFalse(message="The password is not safe")
-     */
-    public function isPasswordSafe($password)
-    {
-        return ($this->login === $password || $this->name === $password || $this->firstname === $password);
-
-    }
 
     public function getId(): ?int
     {
@@ -101,7 +88,7 @@ class User
 
     public function setPassword(string $password): self
     {
-        $this->password = sha1($this->isPasswordSafe($password));
+        $this->password = sha1($password);
 
         return $this;
     }

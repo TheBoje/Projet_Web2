@@ -49,8 +49,6 @@ class AccountController extends AbstractController
         $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
         $form->handleRequest($request);
 
-        $user->setPassword($user->getPassword()); // On hash le mot de passe dans le setter de l'entité
-
         if($form->isSubmitted() && $form->isValid())
         {
             $em->persist($user);
