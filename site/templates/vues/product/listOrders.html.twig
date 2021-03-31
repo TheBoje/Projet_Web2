@@ -23,7 +23,7 @@
                 <td><a href="{{ path('product_deleteOrder', {'userId' : order.client.id, 'orderId' : order.id}) }}">Supprimer</a></td>
             </tr>
             {% set totalPrice = (order.quantity * order.product.price) + totalPrice %}
-            {% set totalQuantity = order.product.quantity + totalQuantity %}
+            {% set totalQuantity = order.quantity + totalQuantity %}
         {% endfor %}
         </tbody>
         <tfoot>
