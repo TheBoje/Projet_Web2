@@ -5,7 +5,6 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     is-auth: true
-    is-admin: false
     id-user: 1
 
 services:

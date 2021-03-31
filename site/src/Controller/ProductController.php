@@ -21,19 +21,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
-    // TODO revenir sur ce code dégueulasse
-    public function isAllowedUser(int $id = null)
+    public function isAllowedUser()
     {
-        if($id !== null)
-        {
-            if($this->getParameter('id-user') !== $id && $this->getParameter('is-auth') || $this->getParameter('is-admin'))
-                throw $this->createNotFoundException('You\'re not allowed here');
-        }
-        else
-        {
-            if(!$this->getParameter('is-auth') || $this->getParameter('is-admin'))
-                throw $this->createNotFoundException('You\'re not allowed here');
-        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
+
+        if (!$this->getParameter('is-auth') || $user->getIsAdmin())
+            throw $this->createNotFoundException('You\'re not allowed here');
     }
 
     /**
@@ -102,22 +96,20 @@ class ProductController extends AbstractController
      */
     public function listOrdersAction() : Response
     {
-        $id = $this->getParameter('id-user');
-        $this->isAllowedUser($id);
+        $this->isAllowedUser();
 
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
         $userRepository = $em->getRepository(User::class);
         $productRepository = $em->getRepository(Product::class);
 
-        $user = $userRepository->find($id);
+        $user = $userRepository->find($this->getParameter('id-user'));
         $orders = $orderRepository->findBy(array('client' => $user));
 
         return $this->render("vues/product/listOrders.html.twig", ['orders' => $orders]);
     }
 
     /**
-     * @param int $userId
      * @param int $orderId
      * @return Response
      *
@@ -127,7 +119,7 @@ class ProductController extends AbstractController
      */
     public function deleteOrderAction(int $orderId) : Response
     {
-        $this->isAllowedUser($this->getParameter('id-user'));
+        $this->isAllowedUser();
 
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
@@ -176,7 +168,7 @@ class ProductController extends AbstractController
      */
     public function emptyOrdersAction() : Response
     {
-        $this->isAllowedUser($this->getParameter('id-user'));
+        $this->isAllowedUser();
 
         $this->emptyOrders();
 
@@ -188,7 +180,7 @@ class ProductController extends AbstractController
      */
     public function buyOrdersAction() : Response
     {
-        $this->isAllowedUser($this->getParameter('id-user'));
+        $this->isAllowedUser();
 
         $this->emptyOrders(true);
 

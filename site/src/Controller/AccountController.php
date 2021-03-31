@@ -94,8 +94,6 @@ class AccountController extends AbstractController
         $form->add('send', SubmitType::class, ['label' => 'editer le profil']);
         $form->handleRequest($request);
 
-        //dump($user);
-
         if($form->isSubmitted() && $form->isValid())
         {
             $em->flush();

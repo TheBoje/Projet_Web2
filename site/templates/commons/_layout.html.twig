@@ -1,6 +1,6 @@
 {% extends("commons/_body.html.twig") %}
 {% block menu %}
-    {% include("commons/_menu.html.twig") %}
+    {{ render(controller('App\\Controller\\MenuController::menuAction')) }}
 {% endblock %}
 
 {% block flash %}

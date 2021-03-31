@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MenuController extends AbstractController
 {
 
-    public function index(): Response
+    public function menuAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
