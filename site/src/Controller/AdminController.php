@@ -19,12 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
+
     // Vérifie si l'utilisateur est connecté et est bien administrateur
     private function isAccessGranted()
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
-        if(!$this->getParameter('is-auth') || !$this->getParameter('is-admin') || $user === null)
+
+        if(!$this->getParameter('is-auth') || !$user->getIsAdmin() || $user === null)
         {
             throw $this->createNotFoundException('You\'re not allowed here');
         }
@@ -62,12 +64,14 @@ class AdminController extends AbstractController
      */
     public function listUsersAction() : Response
     {
+        // il faut être admin pour pouvoir modifier le tout
         $this->isAccessGranted();
 
         $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository(User::class);
         $users = $userRepository->findAll();
 
+        // C'est pour cela qu'on envoie true à isAdmin pour le twig étant donné qu'une erreur 404 est levée si c'est le cas
         return $this->render("vues/admin/listUsers.html.twig", ['users' => $users]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,7 +75,8 @@ class AccountController extends AbstractController
      */
     public function disconnectAction() : Response
     {
-        return $this->render("vues/account/disconnect.html.twig");
+        $this->addFlash('info', 'vous pourrez vous déconnecter ultérieurement');
+        return $this->redirectToRoute('account_welcome');
     }
 
     /**
@@ -86,9 +88,13 @@ class AccountController extends AbstractController
         $userRepository = $em->getRepository(User::class);
         $user = $userRepository->find($this->getParameter('id-user'));
 
-        $form =  $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
+
+
         $form->add('send', SubmitType::class, ['label' => 'editer le profil']);
         $form->handleRequest($request);
+
+        //dump($user);
 
         if($form->isSubmitted() && $form->isValid())
         {
