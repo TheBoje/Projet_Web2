@@ -42,14 +42,13 @@ class AccountController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
 
-        $user = new User();
+        $user = new User(); // le compte créé ne sera jamais admin car le constructeur met admmin à false par défaut
 
         $form = $this->createForm(UserType::class, $user);
         $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
         $form->handleRequest($request);
 
-        $user->setPassword(sha1($user->getPassword())); // On hash le mot de passe
-        $user->setIsAdmin(false); // le compte créé ne sera jamais admin
+        $user->setPassword($user->getPassword()); // On hash le mot de passe dans le setter de l'entité
 
         if($form->isSubmitted() && $form->isValid())
         {
