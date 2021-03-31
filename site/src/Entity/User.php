@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -26,6 +26,8 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      *
+     * @Assert\NotBlank
+     * @Assert\Unique
      */
     private $login;
 
@@ -48,7 +50,7 @@ class User
     /**
      * @ORM\Column(type="date")
      *
-     *
+     * @Assert\LessThan("today")
      */
     private $birthdate;
 
@@ -56,6 +58,24 @@ class User
      * @ORM\Column(type="boolean", options={"default"=false})
      */
     private $is_admin;
+
+    // CONSTRUCTEUR
+    public function __construct($isAdmin = false)
+    {
+        $this->is_admin = $isAdmin;
+    }
+
+    /**
+     * @param $password
+     * @return bool
+     *
+     * @Assert\IsFalse(message="The password is not safe")
+     */
+    public function isPasswordSafe($password)
+    {
+        return ($this->login === $password || $this->name === $password || $this->firstname === $password);
+
+    }
 
     public function getId(): ?int
     {
@@ -81,7 +101,7 @@ class User
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        $this->password = sha1($password);
 
         return $this;
     }

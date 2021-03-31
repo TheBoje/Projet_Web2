@@ -121,13 +121,13 @@ class ProductController extends AbstractController
      * @param int $orderId
      * @return Response
      *
-     * @Route("orders/delete/{userId}/{orderId}",
+     * @Route("orders/delete/{orderId}",
      *     name = "deleteOrder",
      *     requirements = { "userId" = "[1-9]\d*", "orderId" = "[1-9]\d*"})
      */
-    public function deleteOrderAction(int $userId, int $orderId) : Response
+    public function deleteOrderAction(int $orderId) : Response
     {
-        $this->isAllowedUser($userId);
+        $this->isAllowedUser($this->getParameter('id-user'));
 
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
@@ -143,7 +143,56 @@ class ProductController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToRoute('product_listOrders', ['id' => $userId]);
+        return $this->redirectToRoute('product_listOrders', ['id' => $this->getParameter('id-user')]);
+    }
+
+    private function emptyOrders($isBuyed = false)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $orderRepository = $em->getRepository(Order::class);
+        $productRepository = $em->getRepository(Product::class);
+        $userRepository = $em->getRepository(User::class);
+
+        $orders = $orderRepository->findBy(array('client' => $userRepository->find($this->getParameter('id-user'))));
+
+        foreach($orders as $order)
+        {
+            if(!$isBuyed)
+            {
+                $storedProduct = $productRepository->find($order->getProduct()->getId());
+                $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
+            }
+            $em->remove($order);
+        }
+
+        $em->flush();
+    }
+
+    /**
+     * Vide le panier d'un utilisateur
+     *
+     * @Route("orders/empty",
+     *     name = "emptyOrders")
+     */
+    public function emptyOrdersAction() : Response
+    {
+        $this->isAllowedUser($this->getParameter('id-user'));
+
+        $this->emptyOrders();
+
+        return $this->redirectToRoute('product_listOrders');
+    }
+
+    /**
+     * @Route("orders/buy", name = "buyOrders")
+     */
+    public function buyOrdersAction() : Response
+    {
+        $this->isAllowedUser($this->getParameter('id-user'));
+
+        $this->emptyOrders(true);
+
+        return $this->redirectToRoute('product_listOrders');
     }
 
     /**

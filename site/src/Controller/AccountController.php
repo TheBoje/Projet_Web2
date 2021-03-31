@@ -42,14 +42,13 @@ class AccountController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
 
-        $user = new User();
+        $user = new User(); // le compte créé ne sera jamais admin car le constructeur met admmin à false par défaut
 
         $form = $this->createForm(UserType::class, $user);
         $form->add('send', SubmitType::class, ['label' => 'Créer l\'utilisateur']);
         $form->handleRequest($request);
 
-        $user->setPassword(sha1($user->getPassword())); // On hash le mot de passe
-        $user->setIsAdmin(false); // le compte créé ne sera jamais admin
+        $user->setPassword($user->getPassword()); // On hash le mot de passe dans le setter de l'entité
 
         if($form->isSubmitted() && $form->isValid())
         {
@@ -81,8 +80,29 @@ class AccountController extends AbstractController
     /**
      * @Route("/edit", name = "editProfile")
      */
-    public function editProfileAction() : Response
+    public function editProfileAction(Request $request) : Response
     {
-        return $this->render("vues/account/editProfile.html.twig");
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $em->getRepository(User::class);
+        $user = $userRepository->find($this->getParameter('id-user'));
+
+        $form =  $this->createForm(UserType::class, $user);
+        $form->add('send', SubmitType::class, ['label' => 'editer le profil']);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->flush();
+            $this->addFlash('info', 'édition de l\'utilisateur');
+            return $this->redirectToRoute('product_productList');
+        }
+        else
+        {
+            if($form->isSubmitted())
+                $this->addFlash('info', 'erreur lors de l\'édition');
+
+            $args = array('userForm' => $form->createView());
+            return $this->render('vues/account/editProfile.html.twig', $args);
+        }
     }
 }
