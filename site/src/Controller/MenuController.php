@@ -16,7 +16,7 @@ class MenuController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
 
-        $nbProducts = count($em->getRepository(Product::class)->findBy(array('$not' => array('quantity' => 0))));
+        $nbProducts = count($em->getRepository(Product::class)->findAll());
 
         return $this->render('commons/_menu.html.twig', ['isAdmin' => $user->getIsAdmin(), 'nbProducts' => $nbProducts]);
     }
