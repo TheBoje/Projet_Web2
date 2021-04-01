@@ -17,6 +17,16 @@
     {% endif %}
 
     <li><a href="{{ path('account_welcome') }}">Aller à la page d'accueil</a></li>
-    <li>Il y a {{ nbProducts }} disponible(s)</li>
+    <li>Il y a {{ nbProducts }} produits dans la base de données</li>
 </ul>
+
+    {% if isAuth == false %}
+        <img src="{{ asset('assets/images/pas_connecte.png') }}" alt="Utilisateur pas connecté">
+    {% else %}
+        {% if isAdmin == true%}
+            <img src="{{ asset('assets/images/auth_admin.png') }}" alt="Admin connecté">
+        {% else %}
+            <img src="{{ asset('assets/images/auth_pas_admin.png') }}" alt="Utilisateur connecté">
+        {% endif %}
+    {% endif %}
 {% endblock %}
