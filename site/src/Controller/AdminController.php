@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\ProductType;
@@ -32,6 +33,25 @@ class AdminController extends AbstractController
         }
     }
 
+    private function emptyOrders($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $orderRepository = $em->getRepository(Order::class);
+        $productRepository = $em->getRepository(Product::class);
+        $userRepository = $em->getRepository(User::class);
+
+        $orders = $orderRepository->findBy(array('client' => $userRepository->find($id)));
+
+        foreach($orders as $order)
+        {
+            $storedProduct = $productRepository->find($order->getProduct()->getId());
+            $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
+            $em->remove($order);
+        }
+
+        $em->flush();
+    }
+
     /**
      * Efface un utilisateur de la base de donnée
      *
@@ -51,6 +71,9 @@ class AdminController extends AbstractController
         $userRepository = $em->getRepository('App:User');
 
         $user = $userRepository->find($id);
+
+        $this->emptyOrders($id);
+
         $em->remove($user);
         $em->flush();
 
