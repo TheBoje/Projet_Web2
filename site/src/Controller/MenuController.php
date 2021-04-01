@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ class MenuController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
 
-        return $this->render('commons/_menu.html.twig', ['isAdmin' => $user->getIsAdmin()]);
+        $nbProducts = count($em->getRepository(Product::class)->findBy(array('$not' => array('quantity' => 0))));
+
+        return $this->render('commons/_menu.html.twig', ['isAdmin' => $user->getIsAdmin(), 'nbProducts' => $nbProducts]);
     }
 }
