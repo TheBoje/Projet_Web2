@@ -23,6 +23,7 @@ class AccountController extends AbstractController
      */
     public function welcomeAction() : Response
     {
+        dump($this->getParameter('id-user'));
         return $this->render("vues/account/welcome.html.twig");
     }
 

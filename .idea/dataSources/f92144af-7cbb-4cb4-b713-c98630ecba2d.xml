@@ -1401,101 +1401,111 @@ product</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="508" parent="172" name="id">
+    <foreign-key id="508" parent="171" name="FK_1076FD5FC7440455">
+      <ColNames>client</ColNames>
+      <RefTableName>im2021_user</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="509" parent="171" name="FK_1076FD5FD34A04AD">
+      <ColNames>product</ColNames>
+      <RefTableName>im2021_product</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="510" parent="172" name="id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="509" parent="172" name="label">
+    <column id="511" parent="172" name="label">
       <Position>2</Position>
       <DataType>VARCHAR(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="510" parent="172" name="price">
+    <column id="512" parent="172" name="quantity">
       <Position>3</Position>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="511" parent="172" name="quantity">
+    <column id="513" parent="172" name="price">
       <Position>4</Position>
-      <DataType>INTEGER|0s</DataType>
+      <DataType>DOUBLE PRECISION|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="512" parent="172">
+    <key id="514" parent="172">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="513" parent="173" name="id">
+    <column id="515" parent="173" name="id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="514" parent="173" name="login">
+    <column id="516" parent="173" name="login">
       <Position>2</Position>
       <DataType>VARCHAR(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="515" parent="173" name="password">
+    <column id="517" parent="173" name="password">
       <Position>3</Position>
       <DataType>VARCHAR(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="516" parent="173" name="name">
+    <column id="518" parent="173" name="name">
       <Position>4</Position>
       <DataType>VARCHAR(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="517" parent="173" name="firstname">
+    <column id="519" parent="173" name="firstname">
       <Position>5</Position>
       <DataType>VARCHAR(32)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="518" parent="173" name="birthdate">
+    <column id="520" parent="173" name="birthdate">
       <Position>6</Position>
       <DataType>DATE|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="519" parent="173" name="is_admin">
+    <column id="521" parent="173" name="is_admin">
       <Position>7</Position>
       <DataType>BOOLEAN|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <index id="520" parent="173" name="log_idx">
+    <index id="522" parent="173" name="log_idx">
       <ColNames>login</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="521" parent="173">
+    <key id="523" parent="173">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="522" parent="174" name="type">
+    <column id="524" parent="174" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="523" parent="174" name="name">
+    <column id="525" parent="174" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="524" parent="174" name="tbl_name">
+    <column id="526" parent="174" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="525" parent="174" name="rootpage">
+    <column id="527" parent="174" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="526" parent="174" name="sql">
+    <column id="528" parent="174" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="527" parent="175" name="name">
+    <column id="529" parent="175" name="name">
       <Position>1</Position>
     </column>
-    <column id="528" parent="175" name="seq">
+    <column id="530" parent="175" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

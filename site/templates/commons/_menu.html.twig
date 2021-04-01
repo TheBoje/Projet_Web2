@@ -7,7 +7,7 @@
         <li><a href="{{ path('account_disconnect') }}">Déconnexion</a></li>
         {% if isAdmin == true %}
             <li><a href="{{ path('admin_listUsers') }}">Gérer les clients</a></li>
-            <li><a href="{{ path('admin_editProducts') }}">Créer un produit</a></li>
+            <li><a href="{{ path('admin_addProduct') }}">Créer un produit</a></li>
             <li><a href="https://fr.wikipedia.org/wiki/Amour_et_Amn%C3%A9sie">Amour et amnésie</a></li>
         {% else %}
             <li><a href="{{ path('account_editProfile') }}">Gérer le profil</a></li>

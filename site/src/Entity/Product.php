@@ -25,7 +25,7 @@ class Product
     private $label;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision = 2)
      *
      * @Assert\Positive
      */
