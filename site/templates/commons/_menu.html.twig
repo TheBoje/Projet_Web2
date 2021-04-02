@@ -21,12 +21,12 @@
 </ul>
 
     {% if isAuth == false %}
-        <img src="{{ asset('assets/images/pas_connecte.png') }}" alt="Utilisateur pas connecté">
+        <img src="{{ asset('images/pas_connecte.png') }}" alt="Utilisateur pas connecté" width="100px" height="100px" border="2px solide">
     {% else %}
         {% if isAdmin == true%}
-            <img src="{{ asset('assets/images/auth_admin.png') }}" alt="Admin connecté">
+            <img src="{{ asset('images/auth_admin.png') }}" alt="Admin connecté">
         {% else %}
-            <img src="{{ asset('assets/images/auth_pas_admin.png') }}" alt="Utilisateur connecté">
+            <img src="{{ asset('images/auth_pas_admin.png') }}" alt="Utilisateur connecté">
         {% endif %}
     {% endif %}
 {% endblock %}
