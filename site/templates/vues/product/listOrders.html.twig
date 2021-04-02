@@ -1,4 +1,7 @@
 {% extends("commons/_layout.html.twig") %}
+{% block stylesheet_page %}
+    <link href="{{ asset('css/admin/list-orders.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block title %}Liste du panier{% endblock %}
 {% block vue %}
     {% set totalPrice = 0 %}

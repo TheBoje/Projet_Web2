@@ -1,4 +1,7 @@
 {% extends("commons/_layout.html.twig") %}
+{% block stylesheet_page %}
+    <link href="{{ asset('css/admin/edit-product.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block vue %}
     ID : {{ id }}
     {{ form(form_edit_product) }}

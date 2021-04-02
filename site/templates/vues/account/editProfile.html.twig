@@ -1,4 +1,7 @@
 {% extends("commons/_layout.html.twig") %}
+{% block stylesheet_page %}
+    <link href="{{ asset('css/account/edit-profile.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block vue %}
     {{ form(userForm) }}
 {% endblock %}

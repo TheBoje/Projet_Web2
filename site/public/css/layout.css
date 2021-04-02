@@ -1,0 +1,40 @@
+#vue {
+    flex: 1;
+}
+
+ul {
+    list-style-type: disc;
+}
+
+a:link, a:active {
+    color: #c1bebe;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #9d9a9a;
+    text-decoration: none;
+}
+
+a:hover {
+    color: grey;
+    text-decoration: underline;
+}
+
+#menu {
+    flex-direction: row;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    width: auto;
+}
+
+#menu-links {
+    flex-grow: 1;
+}
+
+#menu-image {
+    flex-grow: 2;
+}

@@ -1,32 +1,35 @@
 {% block menu %}
-<ul>
-    {% if isAuth == false %}
-        <li><a href="{{ path('account_connect') }}">Connexion</a></li>
-        <li><a href="{{ path('account_createAccount') }}">Créer un compte</a></li>
-    {% else %}
-        <li><a href="{{ path('account_disconnect') }}">Déconnexion</a></li>
-        {% if isAdmin == true %}
-            <li><a href="{{ path('admin_listUsers') }}">Gérer les clients</a></li>
-            <li><a href="{{ path('admin_addProduct') }}">Créer un produit</a></li>
-            <li><a href="https://fr.wikipedia.org/wiki/Amour_et_Amn%C3%A9sie">Amour et amnésie</a></li>
-        {% else %}
-            <li><a href="{{ path('account_editProfile') }}">Gérer le profil</a></li>
-            <li><a href="{{ path('product_productList') }}">Lister les produits</a></li>
-            <li><a href="{{ path('product_listOrders') }}">Gérer le panier</a></li>
-        {% endif %}
-    {% endif %}
+    <div id="menu-links">
+        <ul>
+            {% if isAuth == false %}
+                <li><a href="{{ path('account_connect') }}">Connexion</a></li>
+                <li><a href="{{ path('account_createAccount') }}">Créer un compte</a></li>
+            {% else %}
+                <li><a href="{{ path('account_disconnect') }}">Déconnexion</a></li>
+                {% if isAdmin == true %}
+                    <li><a href="{{ path('admin_listUsers') }}">Gérer les clients</a></li>
+                    <li><a href="{{ path('admin_addProduct') }}">Créer un produit</a></li>
+                    <li><a href="https://fr.wikipedia.org/wiki/Amour_et_Amn%C3%A9sie">Amour et amnésie</a></li>
+                {% else %}
+                    <li><a href="{{ path('account_editProfile') }}">Gérer le profil</a></li>
+                    <li><a href="{{ path('product_productList') }}">Lister les produits</a></li>
+                    <li><a href="{{ path('product_listOrders') }}">Gérer le panier</a></li>
+                {% endif %}
+            {% endif %}
 
-    <li><a href="{{ path('account_welcome') }}">Aller à la page d'accueil</a></li>
-    <li>Il y a {{ nbProducts }} produits dans la base de données</li>
-</ul>
-
-    {% if isAuth == false %}
-        <img src="{{ asset('images/pas_connecte.png') }}" alt="Utilisateur pas connecté" width="100px" height="100px" border="2px solide">
-    {% else %}
-        {% if isAdmin == true%}
-            <img src="{{ asset('images/auth_admin.png') }}" alt="Admin connecté">
+            <li><a href="{{ path('account_welcome') }}">Aller à la page d'accueil</a></li>
+            <li>Il y a <b>{{ nbProducts }}</b> produits dans la base de données</li>
+        </ul>
+    </div>
+    <div id="menu-image">
+        {% if isAuth == false %}
+            <img src="{{ asset('images/pas_connecte.png') }}" alt="Utilisateur pas connecté" width="100px" height="100px" border="2px solide">
         {% else %}
-            <img src="{{ asset('images/auth_pas_admin.png') }}" alt="Utilisateur connecté">
+            {% if isAdmin == true%}
+                <img src="{{ asset('images/auth_admin.png') }}" alt="Admin connecté" width="100px" height="100px" border="2px solide">
+            {% else %}
+                <img src="{{ asset('images/auth_pas_admin.png') }}" alt="Utilisateur connecté" width="100px" height="100px" border="2px solide">
+            {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
 {% endblock %}

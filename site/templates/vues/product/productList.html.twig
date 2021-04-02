@@ -1,4 +1,7 @@
 {% extends("commons/_layout.html.twig") %}
+{% block stylesheet_page %}
+   <link href="{{ asset('css/admin/product-list.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block vue %}
    Liste des bières disponibles dans notre magasin
    <form action="{{ path('product_productList') }}" method="post">

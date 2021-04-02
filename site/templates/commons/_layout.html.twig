@@ -1,4 +1,9 @@
 {% extends("commons/_body.html.twig") %}
+{% block stylesheet %}
+    <link href="{{ asset('css/layout.css') }}" rel="stylesheet" type="text/css">
+    {% block stylesheet_page %}{% endblock %}
+{% endblock %}
+
 {% block menu %}
     {{ render(controller('App\\Controller\\MenuController::menuAction')) }}
 {% endblock %}

@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    padding: 5px;
+    position: relative;
+    background-color: lightblue;
+    flex-direction: column;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+label {
+    padding: 15px;
+}
+
+input, button, select {
+    padding: 10px;
+    margin-top: 10px; margin-bottom: 10px;
+}
+
+select, button {
+    position: relative;
+    left: 25px;
+}
+
+footer {
+    height: 50px;
+}

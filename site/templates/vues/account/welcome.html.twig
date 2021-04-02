@@ -1,4 +1,9 @@
 {% extends("commons/_layout.html.twig") %}
+{% block stylesheet_page %}
+    <link href="{{ asset('css/account/welcome.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block vue %}
-This is the welcome page
+    <h2>
+        This is the welcome page
+    </h2>
 {% endblock %}
