@@ -23,8 +23,10 @@ class AccountController extends AbstractController
      */
     public function welcomeAction() : Response
     {
-        dump($this->getParameter('id-user'));
-        return $this->render("vues/account/welcome.html.twig");
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
+
+        return $this->render("vues/account/welcome.html.twig", ['isAdmin' => $user->getIsAdmin()]);
     }
 
 
@@ -54,13 +56,13 @@ class AccountController extends AbstractController
         {
             $em->persist($user);
             $em->flush();
-            $this->addFlash('info', 'ajout d\'un utilisateur');
+            $this->addFlash('info', 'Ajout d\'un utilisateur');
             return $this->redirectToRoute('account_welcome');
         }
         else
         {
             if($form->isSubmitted())
-                $this->addFlash('info', 'erreur lors de la création');
+                $this->addFlash('info', 'Erreur lors de la création');
             
             $args = array('userForm' => $form->createView());
             return $this->render('vues/account/createAccount.html.twig', $args);
@@ -74,7 +76,7 @@ class AccountController extends AbstractController
      */
     public function disconnectAction() : Response
     {
-        $this->addFlash('info', 'vous pourrez vous déconnecter ultérieurement');
+        $this->addFlash('info', 'Vous pourrez vous déconnecter ultérieurement');
         return $this->redirectToRoute('account_welcome');
     }
 
@@ -90,22 +92,20 @@ class AccountController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
 
 
-        $form->add('send', SubmitType::class, ['label' => 'editer le profil']);
+        $form->add('send', SubmitType::class, ['label' => 'Editer le profil']);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
             $em->flush();
-            $this->addFlash('info', 'édition de l\'utilisateur');
+            $this->addFlash('info', 'Édition de l\'utilisateur');
             return $this->redirectToRoute('product_productList');
         }
-        else
-        {
-            if($form->isSubmitted())
-                $this->addFlash('info', 'erreur lors de l\'édition');
 
-            $args = array('userForm' => $form->createView());
-            return $this->render('vues/account/editProfile.html.twig', $args);
-        }
+        if($form->isSubmitted())
+            $this->addFlash('info', 'Erreur lors de l\'édition');
+
+        $args = array('userForm' => $form->createView());
+        return $this->render('vues/account/editProfile.html.twig', $args);
     }
 }

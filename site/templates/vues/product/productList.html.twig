@@ -18,6 +18,7 @@
             <td>{{ order.product.price }}</td>
             <td>{{ order.product.quantity }}</td>
             <td>
+               {% if order.product.quantity > 0 %}
                <label>
                   <select name="{{ order.product.id }}">
                      {% for i in 0..(order.product.quantity) %}
@@ -25,6 +26,7 @@
                      {% endfor %}
                   </select>
                </label>
+               {% endif %}
             </td>
          </tr>
          {% endfor %}
