@@ -1,20 +1,31 @@
 # Projet_Web2
 
-## Schémas de la base de donnée utilisée
+## SOMMAIRE
+- [Schémas de la base de données utilisée](#bdd)
+  1. [Entité association](#ea)
+  2. [Relationnel](#rel)
+- [Hiérarchie du projet](#hierarchie)
+- [Création d'un service sur Symfony](#service)
+- [Points particuliers du framework](#ppf)
 
-### 1. Entité association
+## Schémas de la base de données utilisée <a id="bdd"/>
+
+### i. Entité association <a id="ea"/>
 
 ![schéma entité association](imagesCR/EntityRelationship.png)
 
-### 2. Relationnel
+### ii. Relationnel <a id="rel"/>
 
 ![schéma relationnel](imagesCR/CMD.png)
+
+**Entity.client** est une clé étrangère de **im2021_user**<br>
+**Entity.product** est une clé étrangère de **im2021_product**
 
 Symfony ajoutant une clé primaire automatiquement, 
 nous avons dû ajouter une contrainte unique 
 sur les champs `client` et `produit` afin d'en faire notre clé primaire.
 
-## Hiérarchie du projet
+## Hiérarchie du projet <a id="hierarchie"/>
 
 ```
 src/
@@ -94,7 +105,7 @@ public/
 └───images                      # Contient les images du site
 ```
 
-## Création d'un service sur Symfony
+## Création d'un service sur Symfony <a id="service"/>
 
 Avant de procéder à la création d'un service sous Symfony, nous allons expliquer briévement ce
 à quoi cela correspond.
@@ -133,3 +144,5 @@ public function action(InvertString $invertString)
     ...
 }
 ```
+
+## Points particuliers du framework <a id="ppf"/>
