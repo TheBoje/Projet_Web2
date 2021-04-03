@@ -1,4 +1,13 @@
 # Projet_Web2
+Enseignants: M.Subrenant & Mme. Zrour
+
+Ce projet est à réaliser avant le 16 avril 2021 et est à déposer sur Updago 
+dans le cadre de l'Unité d'Enseignement <b>Technologies du Web 2</b>. Ce 
+projet porte sur l'utilisation de Php, Symfony, Twig, et certaines libraires.
+
+Notre groupe est composé des membres suivants :
+- Vincent COMMIN
+- Louis LEENART
 
 ## SOMMAIRE
 - [Schémas de la base de données utilisée](#bdd)
