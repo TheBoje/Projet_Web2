@@ -27,7 +27,7 @@ class AdminController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
 
-        if(!$this->getParameter('is-auth') || !$user->getIsAdmin() || $user === null)
+        if(!$this->getParameter('is-auth') || $user === null || !$user->getIsAdmin() )
         {
             throw $this->createNotFoundException('You\'re not allowed here');
         }
