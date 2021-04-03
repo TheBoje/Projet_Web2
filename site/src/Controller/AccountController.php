@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Services\InvertString;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,13 +21,17 @@ class AccountController extends AbstractController
 {
     /**
      * @Route("/welcome", name = "welcome")
+     * @param InvertString $invertString
+     * @return Response
      */
-    public function welcomeAction() : Response
+    public function welcomeAction(InvertString $invertString) : Response
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
 
-        return $this->render("vues/account/welcome.html.twig", ['isAdmin' => $user->getIsAdmin()]);
+        return $this->render("vues/account/welcome.html.twig",
+            ['isAdmin' => $user->getIsAdmin(),
+            'username' => $invertString->getInvertString($user->getLogin())]);
     }
 
 
