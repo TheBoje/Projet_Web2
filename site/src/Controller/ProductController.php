@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-App\Entity\Order;
 
 use App\Entity\Order;
 use App\Entity\Product;
