@@ -52,7 +52,7 @@ src/
 │    ├─── ProductType.php
 │    └─── UserType.php
 │
-└───Repository                      # Contient les répertoire des entités
+└───Repository                      # Contient les répertoires des entités
      ├─── .gitignore
      ├─── OrderRepository.php
      ├─── ProductRepository.php
@@ -82,14 +82,14 @@ templates/
     │    ├─── editProfile.html.twig
     │    └─── welcome.html.twig
     │
-    ├───admin                      # du controller admin
+    ├───admin                       # du controller admin
     │    ├─── addProduct.html.twig
     │    ├─── editProduct.html.twig
     │    ├─── editProducts.html.twig
     │    ├─── editUser.html.twig
     │    └─── listUsers.html.twig
     │
-    └───product                   # du controller product
+    └───product                     # du controller product
          ├─── listOrders.html.twig
          ├─── orders.html.twig
          └─── productList.html.twig
@@ -98,11 +98,11 @@ templates/
 
 ```
 public/
-├───css                          # Contient toutes les feuilles de styles globales et pour chaque controller
+├───css                             # Contient toutes les feuilles de styles globales et pour chaque controller
 │   ├───account
 │   ├───admin
 │   └───product
-└───images                      # Contient les images du site
+└───images                          # Contient les images du site
 ```
 
 ## Création d'un service sur Symfony <a id="service"/>
@@ -115,26 +115,28 @@ est une classe PHP ne réalisant qu'une seule fonctionnalité (envoi de mail, ma
 qui se veut accessible partout dans le code et injectable dans les classes qui en ont besoin. Il a un
 identifiant qui est son nom de classe.
 
-Pour notre projet nous avons décider de faire un service inversant une chaîne de caractères et de l'afficher sur la
+Pour notre projet nous avons décidé de faire un service inversant une chaîne de caractères et de l'afficher sur la
 page d'accueil.
 
 Dans un premier temps créé notre service dans le dossier `src/Services` :
 ```php
+// src/Services/InvertString.php
 namespace App\Services;
 
 class InvertString
 {
-    // retourne la chaîne de caractère inversé
+    // retourne la chaîne de caractère inversée
     public function getInvertString(string $str) : string
     {
         return strrev($str);
     }
 }
 ```
-Ensuite, pour pouvoir utiliser le service nous devons passer un objet du type en paramètre d'une action qui souhaite
+Ensuite, pour pouvoir utiliser le service nous devons passer un objet du type du service en paramètre d'une action qui souhaite
 l'utiliser :
 
 ```php
+// src/Controller/unController.php
 public function action(InvertString $invertString)
 {
     ...
