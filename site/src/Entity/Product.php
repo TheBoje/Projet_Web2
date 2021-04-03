@@ -20,11 +20,13 @@ class Product
     private $id;
 
     /**
+     * Description du produit
      * @ORM\Column(type="string", length=255)
      */
     private $label;
 
     /**
+     * Prix du produit
      * @ORM\Column(type="decimal", precision = 2)
      *
      * @Assert\Positive
@@ -32,6 +34,7 @@ class Product
     private $price;
 
     /**
+     * Quantité du produit disponible
      * @ORM\Column(type="integer")
      *
      * @Assert\NotBlank

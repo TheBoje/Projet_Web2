@@ -19,19 +19,19 @@ class UserType extends AbstractType
         $builder
             ->add('login',
                 TextType::class,
-                ['label' => 'identifiant'])
+                ['label' => 'Identifiant '])
             ->add('password',
                 PasswordType::class,
-                ['label' => 'mot de passe'])
+                ['label' => 'Mot de passe '])
             ->add('name',
                 TextType::class,
-                ['label' => 'nom'])
+                ['label' => 'Nom '])
             ->add('firstname',
                 TextType::class,
-                ['label' => 'prénom'])
+                ['label' => 'Prénom '])
             ->add('birthdate',
                 DateType::class,
-                ['label' => 'date de naissance',
+                ['label' => 'Date de naissance ',
                     'years' => range(date('Y')-100, date('Y'))])
         ;
     }

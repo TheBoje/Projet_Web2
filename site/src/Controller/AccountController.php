@@ -18,19 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AccountController extends AbstractController
 {
-    /**
-     * @Route("/welcome", name = "welcome")
-     */
-    public function welcomeAction() : Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
-
-        return $this->render("vues/account/welcome.html.twig", ['isAdmin' => $user->getIsAdmin()]);
-    }
-
-
-    /**
+     /**
      * @Route("/connect", name = "connect")
      */
     public function connectAction() : Response
