@@ -14,12 +14,92 @@ Symfony ajoutant une clé primaire automatiquement,
 nous avons dû ajouter une contrainte unique 
 sur les champs `client` et `produit` afin d'en faire notre clé primaire.
 
+## Hiérarchie du projet
+
+```
+src/
+│   Kernel.php
+│
+├───Controller
+│    ├─── .gitignore
+│    ├─── AccountController.php     # Contient toutes les actions relatives aux comptes
+│    ├─── AdminController.php       # Contient les actions accessibles uniquement par l'admin
+│    ├─── MenuController.php        # Contient l'action pour le menu (inclut dans le twig)
+│    └─── ProductController.php     # Contient les actions relatives à la gestion des produits
+│
+├───DataFixtures
+│    └─── AppFixtures.php
+│
+├───Entity                          # Contient les classes relatives aux tables de la base de données
+│    ├─── .gitignore
+│    ├─── Order.php  
+│    ├─── Product.php 
+│    └─── User.php     
+│
+├───Form                            # Contient les formulaires des entités
+│    ├─── OrderType.php           
+│    ├─── ProductType.php
+│    └─── UserType.php
+│
+└───Repository                      # Contient les répertoire des entités
+     ├─── .gitignore
+     ├─── OrderRepository.php
+     ├─── ProductRepository.php
+     └─── UserRepository.php
+```
+
+```
+templates/
+├─── base.html.twig
+│
+├───commons                         # Contient tous les templates twig desquelles nous allons hériter
+│    ├─── _base.html.twig
+│    ├─── _body.html.twig
+│    ├─── _flash.html.twig
+│    ├─── _footer.html.twig
+│    ├─── _layout.html.twig
+│    └─── _menu.html.twig
+│
+├───menu                            # Contient le template du menu
+│    └─── index.html.twig
+│
+└───vues                            # Contient les vues des actions ...
+    ├───account                     # du controller account
+    │    ├─── connect.html.twig
+    │    ├─── createAccount.html.twig
+    │    ├─── disconnect.html.twig
+    │    ├─── editProfile.html.twig
+    │    └─── welcome.html.twig
+    │
+    ├───admin                      # du controller admin
+    │    ├─── addProduct.html.twig
+    │    ├─── editProduct.html.twig
+    │    ├─── editProducts.html.twig
+    │    ├─── editUser.html.twig
+    │    └─── listUsers.html.twig
+    │
+    └───product                   # du controller product
+         ├─── listOrders.html.twig
+         ├─── orders.html.twig
+         └─── productList.html.twig
+
+```
+
+```
+public/
+├───css                          # Contient toutes les feuilles de styles globales et pour chaque controller
+│   ├───account
+│   ├───admin
+│   └───product
+└───images                      # Contient les images du site
+```
+
 ## Création d'un service sur Symfony
 
 Avant de procéder à la création d'un service sous Symfony, nous allons expliquer briévement ce
 à quoi cela correspond.
 
-Un service ([selon M. Achref El Mouelhi](http://www.lsis.org/elmouelhia/courses/php/sf/coursSymfonyServices.pdf)) 
+Un service ([selon M. Achref El Mouelhi](http://www.lsis.org/elmouelhia/courses/php/sf/coursSymfonyServices.pdf))
 est une classe PHP ne réalisant qu'une seule fonctionnalité (envoi de mail, manipulation dans la base de donnée, ...)
 qui se veut accessible partout dans le code et injectable dans les classes qui en ont besoin. Il a un
 identifiant qui est son nom de classe.
