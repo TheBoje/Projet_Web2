@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
+use App\Services\EmptyOrders;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -160,43 +161,23 @@ class ProductController extends AbstractController
      * @Route("orders/empty",
      *     name = "emptyOrders")
      */
-    public function emptyOrdersAction(): Response
+    public function emptyOrdersAction(EmptyOrders $emptyOrders): Response
     {
         $this->isAllowedUser();
 
-        $this->emptyOrders();
+        $emptyOrders->emptyOrders($this->getParameter('id-user'));
 
         return $this->redirectToRoute('product_listOrders');
-    }
-
-    private function emptyOrders($isBuyed = false)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $orderRepository = $em->getRepository(Order::class);
-        $productRepository = $em->getRepository(Product::class);
-        $userRepository = $em->getRepository(User::class);
-
-        $orders = $orderRepository->findBy(array('client' => $userRepository->find($this->getParameter('id-user'))));
-
-        foreach ($orders as $order) {
-            if (!$isBuyed) {
-                $storedProduct = $productRepository->find($order->getProduct()->getId());
-                $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
-            }
-            $em->remove($order);
-        }
-
-        $em->flush();
     }
 
     /**
      * @Route("orders/buy", name = "buyOrders")
      */
-    public function buyOrdersAction(): Response
+    public function buyOrdersAction(EmptyOrders $emptyOrders): Response
     {
         $this->isAllowedUser();
 
-        $this->emptyOrders(true);
+        $emptyOrders->emptyOrders($this->getParameter('id-user'),true);
 
         return $this->redirectToRoute('product_listOrders');
     }

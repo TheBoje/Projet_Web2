@@ -23,7 +23,7 @@ class MenuController extends AbstractController
 
         return $this->render("vues/menu/welcome.html.twig",
             ['isAdmin' => $user->getIsAdmin(),
-                'username' => $invertString->getInvertString($user->getLogin())]);
+                'username' => $invertString->getInvertString($user->getLogin())]); // On utilise le service pour inverser le nom de l'utilisateur
     }
 
     /**
