@@ -18,14 +18,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
-
+    /**
+     * Si l'utilisateur est authentifié mais pas Administrateur, alors la
+     * page est accessible, sinon on renvoie vers une page erreur 404
+     */
     public function isAllowedUser()
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
 
-        if (!$this->getParameter('is-auth') || $user->getIsAdmin())
+        if (!$this->getParameter('is-auth') || $user->getIsAdmin()) {
             throw $this->createNotFoundException('You\'re not allowed here');
+        }
     }
 
     /**
@@ -107,18 +111,21 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Affichage du panier de l'utilisateur connecté
+     *
      * @Route("/orders/list",
      *     name = "listOrders")
      */
     public function listOrdersAction(): Response
     {
+        // N'est accessible que pour un utilisateur connecté non admin
         $this->isAllowedUser();
-
+        // Récupération des repos
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
         $userRepository = $em->getRepository(User::class);
         $productRepository = $em->getRepository(Product::class);
-
+        // Récupérations des commandes et passage au twig
         $user = $userRepository->find($this->getParameter('id-user'));
         $orders = $orderRepository->findBy(array('client' => $user));
 
@@ -126,17 +133,18 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Supprime la commande $orderId du panier de l'utilisateur
      * @param int $orderId
      * @return Response
      *
      * @Route("orders/delete/{orderId}",
      *     name = "deleteOrder",
-     *     requirements = { "userId" = "[1-9]\d*", "orderId" = "[1-9]\d*"})
+     *     requirements = {"orderId" = "[1-9]\d*"})
      */
     public function deleteOrderAction(int $orderId): Response
     {
         $this->isAllowedUser();
-
+        // Récupération des repos
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $em->getRepository(Order::class);
         $productRepository = $em->getRepository(Product::class);
@@ -150,8 +158,8 @@ class ProductController extends AbstractController
         $em->remove($order);
 
         $em->flush();
-
-        return $this->redirectToRoute('product_listOrders', ['id' => $this->getParameter('id-user')]);
+        //
+        return $this->redirectToRoute('product_listOrders');
     }
 
     /**
