@@ -158,7 +158,7 @@ public function action(InvertString $invertString)
 
 ## Points particuliers du framework <a id="ppf"/>
 
-### ajout d'un service pour vider le panier
+### Ajout d'un service pour vider le panier
 
 Durant le développement de notre site, nous nous sommes confronté à un dilemme. Nous devions
 vider le panier d'un utilisateur mais cette action pouvait être réalisé à plusieurs endroits.
