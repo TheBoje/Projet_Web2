@@ -3,7 +3,7 @@
     <link href="{{ asset('css/admin/edit-product.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block vue %}
-    ID : {{ id }}
+    <h2>Édition du produit ID : {{ id }}</h2>
     {{ form(form_edit_product) }}
     <a href="{{ path('admin_deleteProduct', {'id' : id}) }}"><button>Supprimer</button></a>
 {% endblock %}

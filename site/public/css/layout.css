@@ -38,3 +38,8 @@ a:hover {
 #menu-image {
     flex-grow: 2;
 }
+
+table, tr, td {
+    border: 1px solid black;
+}
+
