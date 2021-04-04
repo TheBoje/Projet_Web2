@@ -61,11 +61,15 @@ src/
 │    ├─── ProductType.php
 │    └─── UserType.php
 │
-└───Repository                      # Contient les répertoires des entités
-     ├─── .gitignore
-     ├─── OrderRepository.php
-     ├─── ProductRepository.php
-     └─── UserRepository.php
+├───Repository                      # Contient les répertoires des entités
+│    ├─── .gitignore
+│    ├─── OrderRepository.php
+│    ├─── ProductRepository.php
+│    └─── UserRepository.php
+│
+└───Services                        # Contient les services
+     ├─── EmptyOrders.php
+     └─── InvertString.php
 ```
 
 ```
