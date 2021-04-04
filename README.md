@@ -61,11 +61,15 @@ src/
 │    ├─── ProductType.php
 │    └─── UserType.php
 │
-└───Repository                      # Contient les répertoires des entités
-     ├─── .gitignore
-     ├─── OrderRepository.php
-     ├─── ProductRepository.php
-     └─── UserRepository.php
+├───Repository                      # Contient les répertoires des entités
+│    ├─── .gitignore
+│    ├─── OrderRepository.php
+│    ├─── ProductRepository.php
+│    └─── UserRepository.php
+│
+└───Services                        # Contient les services
+     ├─── EmptyOrders.php
+     └─── InvertString.php
 ```
 
 ```
@@ -157,3 +161,31 @@ public function action(InvertString $invertString)
 ```
 
 ## Points particuliers du framework <a id="ppf"/>
+
+### Ajout d'un service pour vider le panier
+
+Durant le développement de notre site, nous nous sommes confrontés à un dilemme. Nous devions
+vider le panier d'un utilisateur mais cette action pouvait être réalisée à plusieurs endroits.
+Dans un premier temps nous avions donc dupliqué un peu de code car la fonction gérant cela devait 
+être appelée dans deux controllers différents. Heureusement, grâce au sujet nous demandant de créer
+un service, nous avons pu nous renseigner et créer un deuxième service vidant le panier.
+
+```php
+class EmptyOrders
+{
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em; // On utilise une instance de l'entity manager pour pouvoir gérer doctrine
+    }
+
+    public function emptyOrders($id, $isBuyed = false)
+    {
+        ... // vide le panier suivant l'id et si les produits sont achetés
+    }
+}
+```
