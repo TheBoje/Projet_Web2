@@ -86,6 +86,10 @@
       <excludeFolder url="file://$MODULE_DIR$/site/vendor/symfony/validator" />
       <excludeFolder url="file://$MODULE_DIR$/site/vendor/symfony/options-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/site/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/site/vendor/swiftmailer/swiftmailer" />
+      <excludeFolder url="file://$MODULE_DIR$/site/vendor/symfony/swiftmailer-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/site/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/site/vendor/egulias/email-validator" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

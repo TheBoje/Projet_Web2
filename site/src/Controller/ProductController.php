@@ -7,6 +7,9 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Services\EmptyOrders;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -196,6 +199,51 @@ class ProductController extends AbstractController
     public function addProductAction(): Response
     {
         return $this->redirectToRoute('product_productList');
+    }
+
+    /**
+     * @Route("/mail", name = "mail")
+     * @return Response
+     */
+    public function mailProductAction(Request $request) : Response {
+        if ($request->isMethod('POST')) {
+            // Création du transport
+            // Le mot de passe n'est même pas caché, pas très malin de notre
+            // part mais la boite mail n'a été créée que pour ça. On aurait
+            // pu utiliser un fichier local pour stocker les identifiants, ou
+            // alors les "clés secretes" de GitHub. Dans une optique de ne
+            // pas perdre trop de temps avec ce genre de détails, on a décidé
+            // de tout laisser là.
+            $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+                ->setUsername('dummy.projet.web@gmail.com')
+                ->setPassword('7sC#soS!jRe3@');
+
+            // Création du mailer à partir du transport
+            $mailer = new Swift_Mailer($transport);
+
+            // Récupération de l'utilisateur et du nombre de produits
+            $em = $this->getDoctrine()->getManager();
+            $userRepository = $em->getRepository(User::class);
+            $productRepository = $em->getRepository(Product::class);
+            $client = $userRepository->find($this->getParameter('id-user'));
+            $nbProducts = count($productRepository->findAll());
+
+            // Création du mail avec les différents paramètres
+            $mail = (new Swift_Message('Pépouze la Binouze - Information Stock'))
+                ->setFrom(['dummy.projet.web@gmail.com'=>'Pépouze la Binouze'])
+                ->setTo([$request->request->get('mail') =>$client->getFirstname() . " " . $client->getName()])
+                ->setBody("Bonjour,\nLa quantité de produit disponible dans le shop Pépouze la Binouze est de " . $nbProducts . " article(s).");
+
+            // Envoie du mail
+            $mailer->send($mail);
+            $this->addFlash('info', 'Mail envoyé avec succès');
+        }
+        else {
+            $this->addFlash('info', 'Erreur la reception du formulaire');
+        }
+
+
+        return $this->redirectToRoute("product_productList");
     }
 
 }

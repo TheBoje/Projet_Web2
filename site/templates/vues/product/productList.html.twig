@@ -31,6 +31,14 @@
          </tr>
          {% endfor %}
       </table>
-      <input type="submit" name="Commander">
+      <input type="submit" value="Commander">
+   </form>
+
+   <form action="{{ path('product_mail') }}" method="post">
+      <h3>Recevez un mail avec le nombre de produit en stock!</h3>
+      <label> Adresse Mail
+         <input type="email" name="mail">
+      </label>
+      <input type="submit" value="Valider">
    </form>
 {% endblock %}
