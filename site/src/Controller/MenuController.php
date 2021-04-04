@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\User;
+use App\Services\InvertString;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,13 +15,15 @@ class MenuController extends AbstractController
      * Page d'accueil
      * @Route("/", name = "menu_welcome")
      */
-    public function welcomeAction(): Response
+    public function welcomeAction(InvertString $invertString): Response
     {
         // Récupération de l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($this->getParameter('id-user'));
 
-        return $this->render("vues/menu/welcome.html.twig", ['isAdmin' => $user->getIsAdmin()]);
+        return $this->render("vues/menu/welcome.html.twig",
+            ['isAdmin' => $user->getIsAdmin(),
+                'username' => $invertString->getInvertString($user->getLogin())]);
     }
 
     /**
