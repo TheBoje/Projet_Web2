@@ -162,6 +162,8 @@ public function action(InvertString $invertString)
 
 ## Points particuliers du framework <a id="ppf"/>
 
+Nous n'avons pas eu de gros problèmes durant la réalisation de ce projet hormis aux points abordés ci-dessous.
+
 ### Ajout d'un service pour vider le panier
 
 Durant le développement de notre site, nous nous sommes confrontés à un dilemme. Nous devions
@@ -189,3 +191,5 @@ class EmptyOrders
     }
 }
 ```
+
+### TODO Formulaire de la liste des produits
