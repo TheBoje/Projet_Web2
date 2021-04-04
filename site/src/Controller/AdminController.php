@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\ProductType;
+use App\Services\EmptyOrders;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,19 +32,23 @@ class AdminController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function deleteUserAction(int $id): Response
+    public function deleteUserAction(int $id, EmptyOrders $emptyOrders): Response
     {
         // il faut être admin pour pouvoir modifier le tout
         $this->isAccessGranted();
+
         // Récupération de l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository('App:User');
         $user = $userRepository->find($id);
+
         // Vide le panier de l'utilisateur avant de le supprimer
-        $this->emptyOrders($id);
+        $emptyOrders->emptyOrders($id);
+
         // Retire l'utilisateur de la base de données
         $em->remove($user);
         $em->flush();
+
         // Retour à la liste des utilisateurs
         return $this->redirectToRoute('admin_listUsers');
     }
@@ -56,28 +61,6 @@ class AdminController extends AbstractController
         if (!$this->getParameter('is-auth') || $user === null || !$user->getIsAdmin()) {
             throw $this->createNotFoundException('You\'re not allowed here');
         }
-    }
-
-    /**
-     * Vide le panier de l'utilisateur $id
-     * @param $id
-     */
-    private function emptyOrders($id)
-    {
-        // Récupération du panier de l'utilisateurs
-        $em = $this->getDoctrine()->getManager();
-        $orderRepository = $em->getRepository(Order::class);
-        $productRepository = $em->getRepository(Product::class);
-        $userRepository = $em->getRepository(User::class);
-
-        $orders = $orderRepository->findBy(array('client' => $userRepository->find($id)));
-        // On retire les produits du panier et on les rajoute aux produits disponibles
-        foreach ($orders as $order) {
-            $storedProduct = $productRepository->find($order->getProduct()->getId());
-            $storedProduct->setQuantity($storedProduct->getQuantity() + $order->getQuantity());
-            $em->remove($order);
-        }
-        $em->flush();
     }
 
     /**
