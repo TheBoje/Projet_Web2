@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
 
-    // Vérifie si l'utilisateur est connecté et est bien administrateur
     /**
      * Efface un utilisateur de la base de donnée
      *
