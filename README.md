@@ -164,9 +164,9 @@ public function action(InvertString $invertString)
 
 ### Ajout d'un service pour vider le panier
 
-Durant le développement de notre site, nous nous sommes confronté à un dilemme. Nous devions
-vider le panier d'un utilisateur mais cette action pouvait être réalisé à plusieurs endroits.
-Dans un premier temps nous avons donc dupliqué un peu de code car la fonction gérant cela devait 
+Durant le développement de notre site, nous nous sommes confrontés à un dilemme. Nous devions
+vider le panier d'un utilisateur mais cette action pouvait être réalisée à plusieurs endroits.
+Dans un premier temps nous avions donc dupliqué un peu de code car la fonction gérant cela devait 
 être appelée dans deux controllers différents. Heureusement, grâce au sujet nous demandant de créer
 un service, nous avons pu nous renseigner et créer un deuxième service vidant le panier.
 
