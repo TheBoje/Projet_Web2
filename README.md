@@ -8,25 +8,23 @@ Notre groupe est composé des membres suivants :
 - Louis LEENART
 
 ## SOMMAIRE
-- [Projet_Web2](#projet_web2)
-  - [SOMMAIRE](#sommaire)
-  - [Schémas de la base de données utilisée <a id="bdd"/>](#schémas-de-la-base-de-données-utilisée-a-idbdd)
-    - [i. Entité association <a id="ea"/>](#i-entité-association-a-idea)
-    - [ii. Relationnel <a id="rel"/>](#ii-relationnel-a-idrel)
-  - [Hiérarchie du projet <a id="hierarchie"/>](#hiérarchie-du-projet-a-idhierarchie)
-  - [Création d'un service sur Symfony <a id="service"/>](#création-dun-service-sur-symfony-a-idservice)
-  - [Points particuliers du framework <a id="ppf"/>](#points-particuliers-du-framework-a-idppf)
-    - [Ajout d'un service pour vider le panier <a id="panier"/>](#ajout-dun-service-pour-vider-le-panier-a-idpanier)
-    - [Formulaire de la liste des produits <a id="produits"/>](#formulaire-de-la-liste-des-produits-a-idproduits)
-    - [Service de mailing <a id="mail"/>](#service-de-mailing-a-idmail)
+- [Schémas de la base de données utilisée <a id="bdd"/>](#bdd)
+    1. [Entité association <a id="ea"/>](#ea)
+    2. [Relationnel <a id="rel"/>](#irel)
+- [Hiérarchie du projet <a id="hierarchie"/>](#hierarchie)
+- [Création d'un service sur Symfony <a id="service"/>](#service)
+- [Points particuliers du framework <a id="ppf"/>](#ppf)
+    1. [Ajout d'un service pour vider le panier <a id="panier"/>](#panier)
+    2. [Formulaire de la liste des produits <a id="produits"/>](#produits)
+    3. [Service de mailing <a id="mail"/>](#mail)
 
 ## Schémas de la base de données utilisée <a id="bdd"/>
 
-### i. Entité association <a id="ea"/>
+### Entité association <a id="ea"/>
 
 ![schéma entité association](imagesCR/EntityRelationship.png)
 
-### ii. Relationnel <a id="rel"/>
+### Relationnel <a id="rel"/>
 
 ![schéma relationnel](imagesCR/CMD.png)
 
