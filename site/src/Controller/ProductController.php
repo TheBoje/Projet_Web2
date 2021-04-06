@@ -208,12 +208,15 @@ class ProductController extends AbstractController
     public function mailProductAction(Request $request) : Response {
         if ($request->isMethod('POST')) {
             // Création du transport
-            // Le mot de passe n'est même pas caché, pas très malin de notre
-            // part mais la boite mail n'a été créée que pour ça. On aurait
-            // pu utiliser un fichier local pour stocker les identifiants, ou
-            // alors les "clés secretes" de GitHub. Dans une optique de ne
-            // pas perdre trop de temps avec ce genre de détails, on a décidé
-            // de tout laisser là.
+
+            /*
+                Le mot de passe n'est même pas caché, ce n'est pas très malin
+                de notre part mais la boite mail n'a été créée que pour ça. On
+                aurait pu utiliser un fichier local pour stocker les
+                identifiants, ou alors les "clés secretes" de GitHub. Dans
+                une optique de ne pas perdre trop de temps avec ce genre de
+                détails, on a décidé de tout laisser là.
+            */
             $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
                 ->setUsername('dummy.projet.web@gmail.com')
                 ->setPassword('7sC#soS!jRe3@');

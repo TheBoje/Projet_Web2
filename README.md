@@ -16,6 +16,9 @@ Notre groupe est composé des membres suivants :
 - [Hiérarchie du projet](#hierarchie)
 - [Création d'un service sur Symfony](#service)
 - [Points particuliers du framework](#ppf)
+  1. [Ajout d'un service pour vider le panier](#panier)
+  2. [Formulaire de la liste des produits](#produits)
+  3. [Service de mailing](#mail)
 
 ## Schémas de la base de données utilisée <a id="bdd"/>
 
@@ -30,13 +33,13 @@ Notre groupe est composé des membres suivants :
 **Entity.client** est une clé étrangère de **im2021_user**<br>
 **Entity.product** est une clé étrangère de **im2021_product**
 
-Symfony ajoutant une clé primaire automatiquement, 
-nous avons dû ajouter une contrainte unique 
-sur les champs `client` et `produit` afin d'en faire notre clé primaire.
+Symfony ajoutant une clé primaire automatiquement, nous avons dû ajouter une 
+contrainte unique sur les champs `client` et `produit` afin d'en faire notre 
+clé primaire.  
 
 ## Hiérarchie du projet <a id="hierarchie"/>
 
-```
+```bash
 src/
 │   Kernel.php
 │
@@ -72,7 +75,7 @@ src/
      └─── InvertString.php
 ```
 
-```
+```bash
 templates/
 ├─── base.html.twig
 │
@@ -87,7 +90,7 @@ templates/
 ├───menu                            # Contient le template du menu
 │    └─── index.html.twig
 │
-└───vues                            # Contient les vues des actions ...
+└───vues                            # Contient les vues des actions
     ├───account                     # du controller account
     │    ├─── connect.html.twig
     │    ├─── createAccount.html.twig
@@ -109,27 +112,31 @@ templates/
 
 ```
 
-```
+```bash
 public/
 ├───css                             # Contient toutes les feuilles de styles globales et pour chaque controller
 │   ├───account
+│   │    └─── ...
 │   ├───admin
+│   │    └─── ...
 │   └───product
+│   │    └─── ...
 └───images                          # Contient les images du site
 ```
 
 ## Création d'un service sur Symfony <a id="service"/>
 
-Avant de procéder à la création d'un service sous Symfony, nous allons expliquer briévement ce
-à quoi cela correspond.
+Avant de procéder à la création d'un service sous Symfony, nous allons 
+expliquer briévement ce à quoi cela correspond.
 
 Un service ([selon M. Achref El Mouelhi](http://www.lsis.org/elmouelhia/courses/php/sf/coursSymfonyServices.pdf))
-est une classe PHP ne réalisant qu'une seule fonctionnalité (envoi de mail, manipulation dans la base de donnée, ...)
-qui se veut accessible partout dans le code et injectable dans les classes qui en ont besoin. Il a un
+est une classe PHP ne réalisant qu'une seule fonctionnalité (envoi de mail, 
+manipulation dans la base de donnée, ...) qui se veut accessible partout 
+dans le code et injectable dans les classes qui en ont besoin. Il a un 
 identifiant qui est son nom de classe.
 
-Pour notre projet nous avons décidé de faire un service inversant une chaîne de caractères et de l'afficher sur la
-page d'accueil.
+Pour notre projet nous avons décidé de faire un service inversant une chaîne 
+de caractères et de l'afficher sur la page d'accueil.
 
 Dans un premier temps créé notre service dans le dossier `src/Services` :
 ```php
@@ -162,15 +169,18 @@ public function action(InvertString $invertString)
 
 ## Points particuliers du framework <a id="ppf"/>
 
-Nous n'avons pas eu de gros problèmes durant la réalisation de ce projet hormis aux points abordés ci-dessous.
+Nous n'avons pas eu de gros problèmes durant la réalisation de ce projet 
+hormis aux points abordés ci-dessous.
 
-### Ajout d'un service pour vider le panier
+### Ajout d'un service pour vider le panier <a id="panier"/>
 
-Durant le développement de notre site, nous nous sommes confrontés à un dilemme. Nous devions
-vider le panier d'un utilisateur mais cette action pouvait être réalisée à plusieurs endroits.
-Dans un premier temps nous avions donc dupliqué un peu de code car la fonction gérant cela devait 
-être appelée dans deux controllers différents. Heureusement, grâce au sujet nous demandant de créer
-un service, nous avons pu nous renseigner et créer un deuxième service vidant le panier.
+Durant le développement de notre site, nous nous sommes confrontés à un 
+dilemme. Nous devions vider le panier d'un utilisateur mais cette action 
+pouvait être réalisée à plusieurs endroits. Dans un premier temps nous 
+avions donc dupliqué un peu de code car la fonction gérant cela devait être 
+appelée dans deux controllers différents. Heureusement, grâce au sujet nous 
+demandant de créer un service, nous avons pu nous renseigner et créer un 
+deuxième service vidant le panier. 
 
 ```php
 class EmptyOrders
@@ -192,4 +202,28 @@ class EmptyOrders
 }
 ```
 
-### TODO Formulaire de la liste des produits
+### Formulaire de la liste des produits <a id="produits"/>
+
+Un autre point qui nous a posé problème est la mise en place de la page 
+principale de notre site, l'ajout au panier des articles. En effet, mettre 
+en place un formulaire 'Symfony' permettant de gérer non pas un seul article,
+mais une liste entière, a été source de nombreux essais et recherches en 
+vain. Nous avons alors décidé d'utiliser la solution moins 'propre' en 
+créant un formulaire classique à la main. Le détail de l'action est alors 
+décrit dans le fichier `src/Controller/ProductController.php` dans 
+`productListAction`.
+
+
+### Service de mailing <a id="mail"/>
+
+Pour ajouter l'action d'envoyer un mail à l'utilisateur contenant le nombre 
+d'articles en stock, nous avons utilisé la librairie `SwiftMailer`. En effet,
+sur la page listant les produits pour les ajouter au panier, nous avons 
+ajouter un formulaire pour saisir une adresse mail vers laquelle nous 
+envoyons le message. L'action qui s'occupe de gérer ce formulaire est dans 
+`src/Controller/ProductController.php` dans `mailProductAction`. La 
+librairie s'occupe de l'intégralité des détails d'envoie du mail, cependant 
+nous avons 'mis en clair' les identifiants de l'adresse mail créée pour 
+l'occasion (pour ce projet). Il serait idéal, pour ne pas dire impératif, de 
+stocker ces identifiants autre part pour ne pas que n'importe qui ait accès 
+à la boite mail.
