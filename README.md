@@ -216,14 +216,4 @@ décrit dans le fichier `src/Controller/ProductController.php` dans
 
 ### Service de mailing <a id="mail"/>
 
-Pour ajouter l'action d'envoyer un mail à l'utilisateur contenant le nombre 
-d'articles en stock, nous avons utilisé la librairie `SwiftMailer`. En effet,
-sur la page listant les produits pour les ajouter au panier, nous avons 
-ajouter un formulaire pour saisir une adresse mail vers laquelle nous 
-envoyons le message. L'action qui s'occupe de gérer ce formulaire est dans 
-`src/Controller/ProductController.php` dans `mailProductAction`. La 
-librairie s'occupe de l'intégralité des détails d'envoie du mail, cependant 
-nous avons 'mis en clair' les identifiants de l'adresse mail créée pour 
-l'occasion (pour ce projet). Il serait idéal, pour ne pas dire impératif, de 
-stocker ces identifiants autre part pour ne pas que n'importe qui ait accès 
-à la boite mail.
+Pour ajouter l'action d'envoyer un mail à l'utilisateur contenant le nombre d'articles en stock, nous avons utilisé la librairie `SwiftMailer`. En effet, sur la page listant les produits pour les ajouter au panier, nous avons ajouter un formulaire pour saisir une adresse mail vers laquelle nous envoyons le message. L'action qui s'occupe de gérer ce formulaire est dans `src/Controller/ProductController.php` dans `mailProductAction`. La librairie s'occupe de l'intégralité des détails d'envoie du mail, cependant nous avons 'mis en clair' les identifiants de l'adresse mail créée pour l'occasion (pour ce projet). Il serait idéal, pour ne pas dire impératif, de stocker ces identifiants autre part pour ne pas que n'importe qui ait accès à la boite mail.
