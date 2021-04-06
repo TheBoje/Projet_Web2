@@ -48,3 +48,8 @@ class ProductRepository extends ServiceEntityRepository
     }
     */
 }
+
+/* ============================================================================
+ * ============= Fichier créé par Vincent Commin et Louis Leenart =============
+ * ============================================================================
+ * */

@@ -104,3 +104,8 @@ class AccountController extends AbstractController
         return $this->render('vues/account/editProfile.html.twig', $args);
     }
 }
+
+/* ============================================================================
+ * ============= Fichier créé par Vincent Commin et Louis Leenart =============
+ * ============================================================================
+ * */

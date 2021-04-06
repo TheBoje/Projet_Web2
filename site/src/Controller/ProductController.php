@@ -245,5 +245,9 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute("product_productList");
     }
-
 }
+
+/* ============================================================================
+ * ============= Fichier créé par Vincent Commin et Louis Leenart =============
+ * ============================================================================
+ * */

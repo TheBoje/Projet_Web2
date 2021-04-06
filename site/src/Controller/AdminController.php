@@ -190,3 +190,8 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_editProducts');
     }
 }
+
+/* ============================================================================
+ * ============= Fichier créé par Vincent Commin et Louis Leenart =============
+ * ============================================================================
+ * */

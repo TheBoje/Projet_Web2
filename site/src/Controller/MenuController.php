@@ -43,3 +43,8 @@ class MenuController extends AbstractController
         return $this->render('commons/_menu.html.twig', ['isAdmin' => $user->getIsAdmin(), 'nbProducts' => $nbProducts]);
     }
 }
+
+/* ============================================================================
+ * ============= Fichier créé par Vincent Commin et Louis Leenart =============
+ * ============================================================================
+ * */
