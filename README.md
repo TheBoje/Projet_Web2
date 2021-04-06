@@ -1,24 +1,24 @@
 # Projet_Web2
 Enseignants: M.Subrenant & Mme. Zrour
 
-Ce projet est à réaliser avant le 16 avril 2021 et est à déposer sur Updago 
-dans le cadre de l'Unité d'Enseignement <b>Technologies du Web 2</b>. Ce 
-projet porte sur l'utilisation de Php, Symfony, Twig, et certaines libraires.
+Ce projet est à réaliser avant le 16 avril 2021 et est à déposer sur Updago dans le cadre de l'Unité d'Enseignement <b>Technologies du Web 2</b>. Ce projet porte sur l'utilisation de Php, Symfony, Twig, et certaines libraires.
 
 Notre groupe est composé des membres suivants :
 - Vincent COMMIN
 - Louis LEENART
 
 ## SOMMAIRE
-- [Schémas de la base de données utilisée](#bdd)
-  1. [Entité association](#ea)
-  2. [Relationnel](#rel)
-- [Hiérarchie du projet](#hierarchie)
-- [Création d'un service sur Symfony](#service)
-- [Points particuliers du framework](#ppf)
-  1. [Ajout d'un service pour vider le panier](#panier)
-  2. [Formulaire de la liste des produits](#produits)
-  3. [Service de mailing](#mail)
+- [Projet_Web2](#projet_web2)
+  - [SOMMAIRE](#sommaire)
+  - [Schémas de la base de données utilisée <a id="bdd"/>](#schémas-de-la-base-de-données-utilisée-a-idbdd)
+    - [i. Entité association <a id="ea"/>](#i-entité-association-a-idea)
+    - [ii. Relationnel <a id="rel"/>](#ii-relationnel-a-idrel)
+  - [Hiérarchie du projet <a id="hierarchie"/>](#hiérarchie-du-projet-a-idhierarchie)
+  - [Création d'un service sur Symfony <a id="service"/>](#création-dun-service-sur-symfony-a-idservice)
+  - [Points particuliers du framework <a id="ppf"/>](#points-particuliers-du-framework-a-idppf)
+    - [Ajout d'un service pour vider le panier <a id="panier"/>](#ajout-dun-service-pour-vider-le-panier-a-idpanier)
+    - [Formulaire de la liste des produits <a id="produits"/>](#formulaire-de-la-liste-des-produits-a-idproduits)
+    - [Service de mailing <a id="mail"/>](#service-de-mailing-a-idmail)
 
 ## Schémas de la base de données utilisée <a id="bdd"/>
 
@@ -33,9 +33,7 @@ Notre groupe est composé des membres suivants :
 **Entity.client** est une clé étrangère de **im2021_user**<br>
 **Entity.product** est une clé étrangère de **im2021_product**
 
-Symfony ajoutant une clé primaire automatiquement, nous avons dû ajouter une 
-contrainte unique sur les champs `client` et `produit` afin d'en faire notre 
-clé primaire.  
+Symfony ajoutant une clé primaire automatiquement, nous avons dû ajouter une contrainte unique sur les champs `client` et `produit` afin d'en faire notre clé primaire.  
 
 ## Hiérarchie du projet <a id="hierarchie"/>
 
@@ -116,27 +114,18 @@ templates/
 public/
 ├───css                             # Contient toutes les feuilles de styles globales et pour chaque controller
 │   ├───account
-│   │    └─── ...
 │   ├───admin
-│   │    └─── ...
 │   └───product
-│   │    └─── ...
 └───images                          # Contient les images du site
 ```
 
 ## Création d'un service sur Symfony <a id="service"/>
 
-Avant de procéder à la création d'un service sous Symfony, nous allons 
-expliquer briévement ce à quoi cela correspond.
+Avant de procéder à la création d'un service sous Symfony, nous allons expliquer briévement ce à quoi cela correspond.
 
-Un service ([selon M. Achref El Mouelhi](http://www.lsis.org/elmouelhia/courses/php/sf/coursSymfonyServices.pdf))
-est une classe PHP ne réalisant qu'une seule fonctionnalité (envoi de mail, 
-manipulation dans la base de donnée, ...) qui se veut accessible partout 
-dans le code et injectable dans les classes qui en ont besoin. Il a un 
-identifiant qui est son nom de classe.
+Un service ([selon M. Achref El Mouelhi](http://www.lsis.org/elmouelhia/courses/php/sf/coursSymfonyServices.pdf)) est une classe PHP ne réalisant qu'une seule fonctionnalité (envoi de mail, manipulation dans la base de donnée, ...) qui se veut accessible partout dans le code et injectable dans les classes qui en ont besoin. Il a un identifiant qui est son nom de classe.
 
-Pour notre projet nous avons décidé de faire un service inversant une chaîne 
-de caractères et de l'afficher sur la page d'accueil.
+Pour notre projet nous avons décidé de faire un service inversant une chaîne de caractères et de l'afficher sur la page d'accueil.
 
 Dans un premier temps créé notre service dans le dossier `src/Services` :
 ```php
@@ -152,8 +141,7 @@ class InvertString
     }
 }
 ```
-Ensuite, pour pouvoir utiliser le service nous devons passer un objet du type du service en paramètre d'une action qui souhaite
-l'utiliser :
+Ensuite, pour pouvoir utiliser le service nous devons passer un objet du type du service en paramètre d'une action qui souhaite l'utiliser :
 
 ```php
 // src/Controller/unController.php
@@ -169,18 +157,11 @@ public function action(InvertString $invertString)
 
 ## Points particuliers du framework <a id="ppf"/>
 
-Nous n'avons pas eu de gros problèmes durant la réalisation de ce projet 
-hormis aux points abordés ci-dessous.
+Nous n'avons pas eu de gros problèmes durant la réalisation de ce projet hormis aux points abordés ci-dessous.
 
 ### Ajout d'un service pour vider le panier <a id="panier"/>
 
-Durant le développement de notre site, nous nous sommes confrontés à un 
-dilemme. Nous devions vider le panier d'un utilisateur mais cette action 
-pouvait être réalisée à plusieurs endroits. Dans un premier temps nous 
-avions donc dupliqué un peu de code car la fonction gérant cela devait être 
-appelée dans deux controllers différents. Heureusement, grâce au sujet nous 
-demandant de créer un service, nous avons pu nous renseigner et créer un 
-deuxième service vidant le panier. 
+Durant le développement de notre site, nous nous sommes confrontés à un dilemme. Nous devions vider le panier d'un utilisateur mais cette action pouvait être réalisée à plusieurs endroits. Dans un premier temps nous avions donc dupliqué un peu de code car la fonction gérant cela devait être appelée dans deux controllers différents. Heureusement, grâce au sujet nous demandant de créer un service, nous avons pu nous renseigner et créer un deuxième service vidant le panier. 
 
 ```php
 class EmptyOrders
@@ -204,14 +185,7 @@ class EmptyOrders
 
 ### Formulaire de la liste des produits <a id="produits"/>
 
-Un autre point qui nous a posé problème est la mise en place de la page 
-principale de notre site, l'ajout au panier des articles. En effet, mettre 
-en place un formulaire 'Symfony' permettant de gérer non pas un seul article,
-mais une liste entière, a été source de nombreux essais et recherches en 
-vain. Nous avons alors décidé d'utiliser la solution moins 'propre' en 
-créant un formulaire classique à la main. Le détail de l'action est alors 
-décrit dans le fichier `src/Controller/ProductController.php` dans 
-`productListAction`.
+Un autre point qui nous a posé problème est la mise en place de la page principale de notre site, l'ajout au panier des articles. En effet, mettre en place un formulaire 'Symfony' permettant de gérer non pas un seul article, mais une liste entière, a été source de nombreux essais et recherches en vain. Nous avons alors décidé d'utiliser la solution moins 'propre' en créant un formulaire classique à la main. Le détail de l'action est alors décrit dans le fichier `src/Controller/ProductController.php` dans `productListAction`.
 
 
 ### Service de mailing <a id="mail"/>
